@@ -17,28 +17,24 @@
         @livewireStyles
     </head>
     <body class="font-sans antialiased">
-        <x-jet-banner />
-
-        <div class="min-h-screen bg-gray-100">
-            @livewire('navigation-menu')
-
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
+        <div class="flex h-screen bg-gray-100">
+            @include('components.sidebar.nav')
+            <div class="flex flex-col flex-1 overflow-x-hidden">
+                @include('components.header.dashboard')
+                <main class="h-full overflow-y-auto pt-4">
+                    <div class="xl:container mx-auto px-4 md:px-6 lg:px-8 pt-4 pb-8">
+                        {{ $slot }}
                     </div>
-                </header>
-            @endif
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+                </main>
+            </div>
+        </div>
+        <div class="modal-center z-30">
+            @livewire('livewire-ui-modal')
         </div>
 
         @stack('modals')
 
         @livewireScripts
+        @stack('scripts')
     </body>
 </html>

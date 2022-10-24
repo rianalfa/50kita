@@ -1,35 +1,33 @@
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
-            <x-jet-authentication-card-logo />
+            <img src="{{ asset('storage/images/Logo BPS - Vertikal.png') }}" class="w-24" />
         </x-slot>
-
-        <x-jet-validation-errors class="mb-4" />
 
         <form method="POST" action="{{ route('password.update') }}">
             @csrf
 
             <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
-            <div class="block">
-                <x-jet-label for="email" value="{{ __('Email') }}" />
-                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus />
-            </div>
+            <x-input.wrapper>
+                <x-input.label for="email" value="Email" />
+                <x-input.text id="email" name="email" type="email" :value="old('email', $request->email)" required autofocus />
+            </x-input.wrapper>
 
-            <div class="mt-4">
-                <x-jet-label for="password" value="{{ __('Password') }}" />
-                <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            </div>
+            <x-input.wrapper>
+                <x-input.label for="password" value="Password" />
+                <x-input.password id="password" name="password" required autocomplete="new-password" />
+                <x-input.error for="password" />
+            </x-input.wrapper>
 
-            <div class="mt-4">
-                <x-jet-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
-                <x-jet-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
-            </div>
+            <x-input.wrapper>
+                <x-input.label for="password_confirmation" value="Konfirmasi Password" />
+                <x-input.password id="password_confirmation" name="password_confirmation" required autocomplete="current-password" />
+                <x-input.error for="password_confirmation" />
+            </x-input.wrapper>
 
             <div class="flex items-center justify-end mt-4">
-                <x-jet-button>
-                    {{ __('Reset Password') }}
-                </x-jet-button>
+                <x-button.primary type="submit">Ubah Password</x-button.primary>
             </div>
         </form>
     </x-jet-authentication-card>
