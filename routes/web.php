@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\Helpdesk\Main as HelpdeskMain;
 use App\Http\Livewire\Notifications\Show;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -30,4 +31,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
     Route::get('notifications', Show::class)
         ->name('notifications');
+
+    Route::name('helpdesk.')->group(function() {
+        Route::get('', HelpdeskMain::class)->name('main');
+    });
 });
