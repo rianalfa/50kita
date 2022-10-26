@@ -55,6 +55,7 @@ class RequestTable extends DataTableComponent
             Column::make("Kategori", "category")
                 ->sortable()
                 ->searchable()
+                ->collapseOnTablet()
                 ->view('livewire.helpdesk.request-column.category'),
             Column::make("Judul", "title")
                 ->searchable(),
@@ -66,17 +67,24 @@ class RequestTable extends DataTableComponent
             Column::make("Diajukan pada", "created_at")
                 ->sortable()
                 ->format(fn($value, $row, Column $column) => date('d M Y', strtotime($row->created_at))),
+            Column::make("Diselesaikan pada", "finished_at")
+                ->sortable()
+                ->format(fn($value, $row, Column $column) => !empty($row->finished_at) ? date('d M Y', strtotime($row->created_at)) : "-"),
             Column::make("Action", "id")
                 ->view('livewire.helpdesk.request-column.action'),
+            Column::make("Pesan", "message")
+                ->hideIf(true),
         ];
     }
 
     public function acceptRequest($id) {
         if (auth()->user()->hasRole('ipds')) {
             try {
-                Request::whereId($id)->update(['status' => 2]);
-                $this->emit('reloadTable');
-                $this->emit('success', 'Berhasil menerima permintaan');
+                if (in_array(Request::whereId($id)->first()->status, [0,1])) {
+                    $this->emit('openModal', 'helpdesk.request-column.accept-request-modal', ['id' => $id]);
+                } else {
+                    $this->emit('error', 'Gagal menerima permintaan');
+                }
             } catch (Exception $e) {
                 $this->emit('error', 'Gagal menerima permintaan');
             }
@@ -86,11 +94,28 @@ class RequestTable extends DataTableComponent
     public function rejectRequest($id) {
         if (auth()->user()->hasRole('ipds')) {
             try {
-                Request::whereId($id)->update(['status' => 1]);
-                $this->emit('reloadTable');
-                $this->emit('success', 'Berhasil menerima permintaan');
+                if (Request::whereId($id)->first()->status == 0) {
+                    $this->emit('openModal', 'helpdesk.request-column.reject-request-modal', ['id' => $id]);
+                } else {
+                    $this->emit('error', 'Gagal menolak permintaan');
+                }
             } catch (Exception $e) {
-                $this->emit('error', 'Gagal menerima permintaan');
+                $this->emit('error', 'Gagal menolak permintaan');
+            }
+        }
+    }
+
+    public function finishRequest($id) {
+        if (auth()->user()->hasRole('ipds')) {
+            try {
+                Request::whereId($id)->update([
+                    'status' => 3,
+                    'finished_at' => date('Y-m-d'),
+                ]);
+                $this->emit('reloadTable');
+                $this->emit('success', 'Berhasil menyelesaikan permintaan');
+            } catch (Exception $e) {
+                $this->emit('error', 'Gagal menyelesaikan permintaan');
             }
         }
     }

@@ -20,7 +20,7 @@ class RequestModal extends ModalComponent
         'request.category' => 'required|string|max:100',
         'request.subcategory' => 'required|string|max:100',
         'request.title' => 'required|string|max:255',
-        'request.description' => 'nullable|string',
+        'request.description' => 'required|string',
         'requestFile' => 'nullable|file|mimes:png,jpg,pdf,doc,docx|max:10240',
     ];
 

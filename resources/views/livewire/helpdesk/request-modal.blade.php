@@ -1,4 +1,4 @@
-<div class="p-4">
+<div>
     <x-modal.header title="Ajukan Permintaan" bordered />
     <x-modal.body class="flex flex-col space-y-4">
         <x-input.wrapper>
@@ -36,7 +36,7 @@
             <x-input.error for="request.description" />
         </x-input.wrapper>
 
-        <x-input.file model="requestFile" label="Lampiran" />
+        <x-input.file model="requestFile" label="Lampiran (opsional)" />
     </x-modal.body>
 
     <x-modal.footer bordered>

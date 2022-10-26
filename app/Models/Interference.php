@@ -16,6 +16,8 @@ class Interference extends Model
         'description',
         'status',
         'attachment',
+        'finished_at',
+        'message',
     ];
 
     public function user() {

@@ -1,4 +1,4 @@
-<div class="p-4">
+<div>
     <x-modal.body>
         <p>{{ $text }}</p>
     </x-modal.body>

@@ -17,6 +17,8 @@ class Request extends Model
         'description',
         'status',
         'attachment',
+        'finished_at',
+        'message',
     ];
 
     public function user() {
