@@ -4,7 +4,7 @@
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center">
                     <div class="flex-shrink-0 md:border-b-2 border-white text-gray-600">
-                        <div class="hidden md:block">
+                        <div class="">
                             <img src="{{ asset('storage/images/Logo BPS - Vertikal.png') }}" class="w-12" />
                         </div>
                     </div>

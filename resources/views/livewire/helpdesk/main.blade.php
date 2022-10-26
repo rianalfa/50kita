@@ -6,14 +6,14 @@
             hover:scale-105 transition-transform duration-200 delay-75"
             x-on:click="type = 1">
             <p class="text-xl md:text-2xl text-blue-600 font-semibold underline underline-offset-8">Permintaan</p>
-            <i class="fa-solid fa-suitcase text-4xl md:text-7xl bg-gradient-to-br from-blue-600 to-blue-400 bg-clip-text text-transparent"></i>
+            <i class="fa-solid fa-suitcase text-4xl md:text-7xl bg-blue-600 bg-clip-text text-transparent"></i>
             <p>Permintaan layanan sesuai kebutuhan Anda</p>
         </x-card.base>
         <x-card.base class="flex flex-col justify-center space-y-4 md:space-y-8 text-center w-full max-w-xs cursor-pointer
             hover:scale-105 transition-transform duration-200 delay-75"
             x-on:click="type = 2">
             <p class="text-xl md:text-2xl text-blue-600 font-semibold underline underline-offset-8">Gangguan</p>
-            <i class="fa-solid fa-user-gear text-4xl md:text-7xl bg-gradient-to-br from-blue-600 to-blue-400 bg-clip-text text-transparent"></i>
+            <i class="fa-solid fa-user-gear text-4xl md:text-7xl bg-blue-600 bg-clip-text text-transparent"></i>
             <p>Laporkan masalah Anda ke tim dukungan kami</p>
         </x-card.base>
     </div>

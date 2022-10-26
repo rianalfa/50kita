@@ -1,4 +1,4 @@
-<div class="my-2 mx-2">
+<div>
     <div class="flex justify-between items-center px-4 sm:px-0">
         @isset($title)
             <h4 class="mb-2 flex-1 text-lg font-semibold text-gray-700 dark:text-gray-300 capitalize">
