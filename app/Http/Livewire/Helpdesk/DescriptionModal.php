@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Helpdesk\Request;
+namespace App\Http\Livewire\Helpdesk;
 
 use Livewire\Component;
 use LivewireUI\Modal\ModalComponent;
@@ -15,7 +15,7 @@ class DescriptionModal extends ModalComponent
 
     public function render()
     {
-        return view('livewire.helpdesk.request.description-modal', [
+        return view('livewire.helpdesk.description-modal', [
             'text' => $this->text,
         ]);
     }

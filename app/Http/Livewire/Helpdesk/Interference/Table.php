@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Livewire\Helpdesk\Request;
+namespace App\Http\Livewire\Helpdesk\Interference;
 
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
-use App\Models\Request;
-use Exception;
+use App\Models\Interference;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
@@ -16,16 +15,7 @@ class Table extends DataTableComponent
         'reloadTable' => '$refresh',
     ];
 
-    protected $model = Request::class;
-
-    public function query(): Builder {
-        if (auth()->user()->hasRole('ipds')) {
-            return Request::with('user');
-        } else {
-            return Request::with('user')
-                ->where('user_id', auth()->user()->id);
-        }
-    }
+    protected $model = Interference::class;
 
     public function configure(): void
     {
@@ -56,15 +46,14 @@ class Table extends DataTableComponent
             Column::make("Kategori", "category")
                 ->sortable()
                 ->searchable()
-                ->collapseOnTablet()
-                ->view('livewire.helpdesk.request.category'),
+                ->collapseOnTablet(),
             Column::make("Judul", "title")
                 ->searchable(),
             Column::make("Deskripsi", "description")
-                ->view('livewire.helpdesk.request.description'),
+                ->view('livewire.helpdesk.interference.description'),
             Column::make("Status", "status")
                 ->sortable()
-                ->view('livewire.helpdesk.request.status'),
+                ->view('livewire.helpdesk.interference.status'),
             Column::make("Diajukan pada", "created_at")
                 ->sortable()
                 ->format(fn($value, $row, Column $column) => date('d M Y', strtotime($row->created_at))),
@@ -72,88 +61,88 @@ class Table extends DataTableComponent
                 ->sortable()
                 ->format(fn($value, $row, Column $column) => !empty($row->finished_at) ? date('d M Y', strtotime($row->created_at)) : "-"),
             Column::make("Action", "id")
-                ->view('livewire.helpdesk.request.action'),
+                ->view('livewire.helpdesk.interference.action'),
             Column::make("Pesan", "message")
                 ->hideIf(true),
         ];
     }
 
-    public function acceptRequest($id) {
+    public function acceptInterference($id) {
         if (auth()->user()->hasRole('ipds')) {
             try {
-                if (in_array(Request::whereId($id)->first()->status, [0,1])) {
-                    $this->emit('openModal', 'helpdesk.request.accept-modal', ['id' => $id]);
+                if (in_array(Interference::whereId($id)->first()->status, [0,1])) {
+                    $this->emit('openModal', 'helpdesk.interference.accept-modal', ['id' => $id]);
                 } else {
-                    $this->emit('error', 'Gagal menerima permintaan');
+                    $this->emit('error', 'Gagal menerima pengaduan');
                 }
-            } catch (Exception $e) {
-                $this->emit('error', 'Gagal menerima permintaan');
+            } catch (\Exception $e) {
+                $this->emit('error', 'Gagal menerima pengaduan');
             }
         }
     }
 
-    public function rejectRequest($id) {
+    public function rejectInterference($id) {
         if (auth()->user()->hasRole('ipds')) {
             try {
-                if (Request::whereId($id)->first()->status == 0) {
-                    $this->emit('openModal', 'helpdesk.request.reject-modal', ['id' => $id]);
+                if (Interference::whereId($id)->first()->status == 0) {
+                    $this->emit('openModal', 'helpdesk.interference.reject-modal', ['id' => $id]);
                 } else {
-                    $this->emit('error', 'Gagal menolak permintaan');
+                    $this->emit('error', 'Gagal menolak pengaduan');
                 }
-            } catch (Exception $e) {
-                $this->emit('error', 'Gagal menolak permintaan');
+            } catch (\Exception $e) {
+                $this->emit('error', 'Gagal menolak pengaduan');
             }
         }
     }
 
-    public function finishRequest($id) {
+    public function finishInterference($id) {
         if (auth()->user()->hasRole('ipds')) {
             try {
-                Request::whereId($id)->update([
+                Interference::whereId($id)->update([
                     'status' => 3,
                     'finished_at' => date('Y-m-d'),
                 ]);
                 $this->emit('reloadTable');
-                $this->emit('success', 'Berhasil menyelesaikan permintaan');
-            } catch (Exception $e) {
-                $this->emit('error', 'Gagal menyelesaikan permintaan');
+                $this->emit('success', 'Berhasil menyelesaikan pengaduan');
+            } catch (\Exception $e) {
+                $this->emit('error', 'Gagal menyelesaikan pengaduan');
             }
         }
     }
 
-    public function editRequest($id) {
-        $request = Request::whereId($id)->first();
-        if ($request->status == 2) {
+    public function editInterference($id) {
+        $interference = Interference::whereId($id)->first();
+        if ($interference->status == 2) {
             $this->emit('error', 'Permintaan telah disetujui');
         } else {
-            if ($request->user_id == auth()->user()->id) {
-                $this->emit('openModal', 'helpdesk.request.form-modal', ['id' => $id]);
+            if ($interference->user_id == auth()->user()->id) {
+                $this->emit('openModal', 'helpdesk.interference.form-modal', ['id' => $id]);
             } else {
-                $this->emit('error', 'Gagal mengedit permintaan');
+                $this->emit('error', 'Gagal mengedit pengaduan');
             }
         }
     }
 
-    public function deleteRequest($id) {
+    public function deleteInterference($id) {
         try {
-            $request = Request::whereId($id)->first();
-            if ($request->user_id == auth()->user()->id) {
-                $request->delete();
+            $interference = Interference::whereId($id)->first();
+            if ($interference->user_id == auth()->user()->id) {
+                $interference->delete();
                 $this->emit('reloadTable');
-                $this->emit('success', 'Berhasil menghapus permintaan');
+                $this->emit('success', 'Berhasil menghapus pengaduan');
             } else {
-                $this->emit('error', 'Gagal menghapus permintaan');
+                $this->emit('error', 'Gagal menghapus pengaduan');
             }
-        } catch (Exception $e) {
-            $this->emit('error', 'Gagal menghapus permintaan');
+        } catch (\Exception $e) {
+            $this->emit('error', 'Gagal menghapus pengaduan');
         }
     }
 
     public function downloadAttachment($id) {
         try {
-            $request = Request::whereId($id)->first();
-            return Storage::download("public/requests/".$id.".".$request->attachment);
-        } catch (Exception $e) {
+            $request = Interference::whereId($id)->first();
+            return Storage::download("public/interferences/".$id.".".$request->attachment);
+        } catch (\Exception $e) {
             $this->emit('error', 'Gagal mengunduh lampiran');
         }
     }

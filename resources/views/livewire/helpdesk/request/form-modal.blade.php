@@ -5,7 +5,7 @@
             <x-input.label for="request.category" value="Kategori" />
             <x-input.select wire:model="request.category">
                 <option value="" disabled hidden>-</option>
-                @foreach (ResultConstant::allCategories() as $category)
+                @foreach (RequestConstant::allCategories() as $category)
                     <option value="{{ $category }}">{{ $category }}</option>
                 @endforeach
             </x-input.select>
@@ -16,7 +16,7 @@
             <x-input.label for="request.subcategory" value="Subkategori" />
             <x-input.select wire:model.defer="request.subcategory">
                 <option value="" disabled hidden>-</option>
-                @forelse ((ResultConstant::subcategories($request->category) ?? []) as $subcategory)
+                @forelse ((RequestConstant::subcategories($request->category) ?? []) as $subcategory)
                     <option value="{{ $subcategory }}">{{ $subcategory }}</option>
                 @empty
                 @endforelse

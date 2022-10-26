@@ -44,7 +44,7 @@ class FormModal extends ModalComponent
                 $this->emit('error', 'Lampiran gagal diunggah');
             }
 
-            $this->emitTo('helpdesk.request-table', 'reloadTable');
+            $this->emitTo('helpdesk.main', 'changeType', '1');
             $this->emit('success', 'Permintaan berhasil diajukan');
             $this->emit('closeModal');
         } catch (Exception $e) {

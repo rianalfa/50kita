@@ -27,16 +27,37 @@
         <div class="flex w-full">
             @php
                 if (auth()->user()->hasRole('ipds')) {
-                    $requests = \App\Models\Request::orderBy('created_at')->first() ?? [];
+                    $requests = \App\Models\Request::first() ?? [];
                 } else {
                     $requests = \App\Models\Request::where('user_id', auth()->user()->id)
-                                    ->orderBy('created_at')->first() ?? [];
+                                    ->first() ?? [];
                 }
             @endphp
 
             @if (!empty($requests))
                 <div class="w-full max-w-full">
                     @livewire('helpdesk.request.table')
+                </div>
+            @else
+                <x-empty />
+            @endif
+        </div>
+    </div>
+
+    <div class="absolute flex flex-col justify-center space-y-4 md:space-y-8 w-full" x-show="type==2"
+        x-transition:enter="transition ease-out duration-300 delay-200" x-transition:enter-start="scale-50 opacity-0" x-transition:enter-end="scale-100 opacity-100"
+        x-transition:leave="transition ease-in duration-200" x-transition:leave-start="scale-100 opacity-100" x-transition:leave-end="scale-150 opacity-0">
+        <div class="flex justify-end items-center w-full">
+            <x-button.primary wire:click="$emit('openModal', 'helpdesk.interference.form-modal')">Adukan Gangguan</x-button.primary>
+        </div>
+        <div class="flex w-full">
+            @php
+                $interferences = \App\Models\Interference::first() ?? [];
+            @endphp
+
+            @if (!empty($interferences))
+                <div class="w-full max-w-full">
+                    @livewire('helpdesk.interference.table')
                 </div>
             @else
                 <x-empty />

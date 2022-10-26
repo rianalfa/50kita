@@ -7,6 +7,10 @@ use Livewire\Component;
 
 class Main extends Component
 {
+    protected $listeners = [
+        'changeType' => 'changeType',
+    ];
+
     public $type;
 
     public function mount() {
