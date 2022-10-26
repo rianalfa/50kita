@@ -1,5 +1,5 @@
-<div class="fixed left-0 flex-shrink-0 w-64 p-2 z-[999]">
-    <aside class="fixed inset-y-2 z-20 flex-shrink-0 rounded-md w-full max-w-[15rem] mx-auto overflow-y-auto bg-blue-600 hidden lg:block scroll-style shadow-md shadow-blue-300">
+<div class="fixed lg:relative left-0 flex-shrink-0 w-64 lg:p-2 z-[999]">
+    <aside class="absolute inset-y-2 z-20 flex-shrink-0 rounded-md w-full max-w-[15rem] mx-auto overflow-y-auto bg-blue-600 hidden lg:block scroll-style shadow-md shadow-blue-300">
         <div class="text-gray-500 dark:text-gray-400">
             <a class="flex items-center justify-center bg-white text-blue-600 rounded-t-md p-4" href="#">
                 <x-logo.text />

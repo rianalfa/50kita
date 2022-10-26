@@ -19,7 +19,7 @@
         @livewireStyles
     </head>
     <body class="font-sans antialiased overflow-hidden">
-        <div class="flex h-screen bg-gray-50 mt-0">
+        <div class="flex relative h-screen bg-gray-50 mt-0">
             @include('components.sidebar.nav')
             <div class="flex flex-col flex-1 overflow-x-hidden">
                 @include('components.header.dashboard')
