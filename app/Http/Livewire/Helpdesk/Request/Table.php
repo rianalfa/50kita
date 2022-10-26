@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Helpdesk;
+namespace App\Http\Livewire\Helpdesk\Request;
 
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 
-class RequestTable extends DataTableComponent
+class Table extends DataTableComponent
 {
     protected $listeners = [
         'reloadTable' => '$refresh',
@@ -56,14 +56,14 @@ class RequestTable extends DataTableComponent
                 ->sortable()
                 ->searchable()
                 ->collapseOnTablet()
-                ->view('livewire.helpdesk.request-column.category'),
+                ->view('livewire.helpdesk.request.category'),
             Column::make("Judul", "title")
                 ->searchable(),
             Column::make("Deskripsi", "description")
-                ->view('livewire.helpdesk.request-column.description'),
+                ->view('livewire.helpdesk.request.description'),
             Column::make("Status", "status")
                 ->sortable()
-                ->view('livewire.helpdesk.request-column.status'),
+                ->view('livewire.helpdesk.request.status'),
             Column::make("Diajukan pada", "created_at")
                 ->sortable()
                 ->format(fn($value, $row, Column $column) => date('d M Y', strtotime($row->created_at))),
@@ -71,7 +71,7 @@ class RequestTable extends DataTableComponent
                 ->sortable()
                 ->format(fn($value, $row, Column $column) => !empty($row->finished_at) ? date('d M Y', strtotime($row->created_at)) : "-"),
             Column::make("Action", "id")
-                ->view('livewire.helpdesk.request-column.action'),
+                ->view('livewire.helpdesk.request.action'),
             Column::make("Pesan", "message")
                 ->hideIf(true),
         ];
@@ -81,7 +81,7 @@ class RequestTable extends DataTableComponent
         if (auth()->user()->hasRole('ipds')) {
             try {
                 if (in_array(Request::whereId($id)->first()->status, [0,1])) {
-                    $this->emit('openModal', 'helpdesk.request-column.accept-request-modal', ['id' => $id]);
+                    $this->emit('openModal', 'helpdesk.request.accept-modal', ['id' => $id]);
                 } else {
                     $this->emit('error', 'Gagal menerima permintaan');
                 }
@@ -95,7 +95,7 @@ class RequestTable extends DataTableComponent
         if (auth()->user()->hasRole('ipds')) {
             try {
                 if (Request::whereId($id)->first()->status == 0) {
-                    $this->emit('openModal', 'helpdesk.request-column.reject-request-modal', ['id' => $id]);
+                    $this->emit('openModal', 'helpdesk.request.reject-modal', ['id' => $id]);
                 } else {
                     $this->emit('error', 'Gagal menolak permintaan');
                 }
@@ -126,7 +126,7 @@ class RequestTable extends DataTableComponent
             $this->emit('error', 'Permintaan telah disetujui');
         } else {
             if ($request->user_id == auth()->user()->id) {
-                $this->emit('openModal', 'helpdesk.request-modal', ['id' => $id]);
+                $this->emit('openModal', 'helpdesk.request.form-modal', ['id' => $id]);
             } else {
                 $this->emit('error', 'Gagal mengedit permintaan');
             }

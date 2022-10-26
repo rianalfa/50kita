@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Livewire\Helpdesk\RequestColumn;
+namespace App\Http\Livewire\Helpdesk\Request;
 
 use App\Models\Request;
 use Exception;
 use Livewire\Component;
 use LivewireUI\Modal\ModalComponent;
 
-class AcceptRequestModal extends ModalComponent
+class RejectModal extends ModalComponent
 {
     public $requestId;
     public $message;
@@ -21,24 +21,24 @@ class AcceptRequestModal extends ModalComponent
         $this->message = "";
     }
 
-    public function acceptRequest() {
+    public function rejectRequest() {
         $this->validate();
         try {
             $request = Request::whereId($this->requestId)->first();
-            $request->status = 2;
+            $request->status = 1;
             $request->message = $this->message;
             $request->save();
 
             $this->emit('closeModal');
-            $this->emit('success', 'Berhasil memasukkan pesan diterima');
-            $this->emitTo('helpdesk.request-table', 'reloadTable');
+            $this->emit('success', 'Berhasil memasukkan pesan ditolak');
+            $this->emitTo('helpdesk.request.table', 'reloadTable');
         } catch (Exception $e) {
-            $this->emit('error', 'Gagal memasukkan pesan diterima');
+            $this->emit('error', 'Gagal memasukkan pesan ditolak');
         }
     }
 
     public function render()
     {
-        return view('livewire.helpdesk.request-column.accept-request-modal');
+        return view('livewire.helpdesk.request.reject-modal');
     }
 }

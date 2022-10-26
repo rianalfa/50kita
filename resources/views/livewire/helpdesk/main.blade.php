@@ -22,7 +22,7 @@
         x-transition:enter="transition ease-out duration-300 delay-200" x-transition:enter-start="scale-50 opacity-0" x-transition:enter-end="scale-100 opacity-100"
         x-transition:leave="transition ease-in duration-200" x-transition:leave-start="scale-100 opacity-100" x-transition:leave-end="scale-150 opacity-0">
         <div class="flex justify-end items-center w-full">
-            <x-button.primary wire:click="$emit('openModal', 'helpdesk.request-modal')">Ajukan Permintaan</x-button.primary>
+            <x-button.primary wire:click="$emit('openModal', 'helpdesk.request.form-modal')">Ajukan Permintaan</x-button.primary>
         </div>
         <div class="flex w-full">
             @php
@@ -36,23 +36,11 @@
 
             @if (!empty($requests))
                 <div class="w-full max-w-full">
-                    @livewire('helpdesk.request-table')
+                    @livewire('helpdesk.request.table')
                 </div>
             @else
                 <x-empty />
             @endif
         </div>
     </div>
-
-    @if ($type==1)
-        <div class="flex flex-col justify-center space-y-4 md:space-y-8">
-            <div class="flex justify-end items-center w-full">
-                <x-button.primary wire:click="$emit('openModal', 'helpdesk.request-modal')">Ajukan Permintaan</x-button.primary>
-            </div>
-        </div>
-    @elseif ($type==2)
-        <x-card.base>
-            Ini gangguan
-        </x-card.base>
-    @endif
 </div>

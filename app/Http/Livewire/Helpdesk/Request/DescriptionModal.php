@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Livewire\Helpdesk\RequestColumn;
+namespace App\Http\Livewire\Helpdesk\Request;
 
 use Livewire\Component;
 use LivewireUI\Modal\ModalComponent;
 
-class RequestDescriptionModal extends ModalComponent
+class DescriptionModal extends ModalComponent
 {
     protected $text;
 
@@ -15,7 +15,7 @@ class RequestDescriptionModal extends ModalComponent
 
     public function render()
     {
-        return view('livewire.helpdesk.request-column.request-description-modal', [
+        return view('livewire.helpdesk.request.description-modal', [
             'text' => $this->text,
         ]);
     }

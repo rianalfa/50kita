@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Helpdesk;
+namespace App\Http\Livewire\Helpdesk\Request;
 
 use App\Constants\Request as ConstantsRequest;
 use App\Models\Request;
@@ -9,7 +9,7 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
 
-class RequestModal extends ModalComponent
+class FormModal extends ModalComponent
 {
     use WithFileUploads;
 
@@ -54,6 +54,6 @@ class RequestModal extends ModalComponent
 
     public function render()
     {
-        return view('livewire.helpdesk.request-modal');
+        return view('livewire.helpdesk.request.form-modal');
     }
 }

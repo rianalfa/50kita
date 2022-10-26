@@ -3,14 +3,14 @@
         @case(1)
             <x-badge.error text="ditolak" class="mr-0" />
             <button class="text-sm font-semibold border-0 outline-0 hover:underline"
-                wire:click="$emit('openModal', 'helpdesk.request-column.request-description-modal', {{ json_encode(['text' => $row->message]) }})">
+                wire:click="$emit('openModal', 'helpdesk.request.description-modal', {{ json_encode(['text' => $row->message]) }})">
                 lihat pesan
             </button>
             @break
         @case(2)
             <x-badge.success text="diterima" class="mr-0" />
             <button class="text-sm font-semibold border-0 outline-0 hover:underline"
-                wire:click="$emit('openModal', 'helpdesk.request-column.request-description-modal', {{ json_encode(['text' => $row->message]) }})">
+                wire:click="$emit('openModal', 'helpdesk.request.description-modal', {{ json_encode(['text' => $row->message]) }})">
                 lihat pesan
             </button>
             @break
