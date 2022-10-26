@@ -1,13 +1,11 @@
-@props(['menu' => 'Menu Item', 'active' => false])
+@props(['menu' => 'Menu Item', 'active' => false, 'icon' => ''])
 
-<li @class( [ 'bg-gray-100 hover:bg-gray-100 hover:text-gray-800'=> $active,
-    'hover:bg-gray-200 hover:text-gray-800' => !$active,
-    'relative px-6 py-3 flex items-center transition'
+<li @class( [ 'text-blue-900 bg-white'=> $active,
+    'text-white hover:bg-gray-500/75' => !$active,
+    'flex items-center rounded-xl cursor-pointer w-[95%] max-w-[13rem] mx-auto transition'
     ])>
-    @if ($active)
-        <span class="absolute inset-y-0 left-0 w-0.5 bg-blue-500 rounded-tr-lg rounded-br-lg"></span>
-    @endif
-    <a class="inline-flex items-center w-full text-sm font-semibold" {{ $attributes->merge(['href']) }}>
+    <a class="inline-flex space-x-4 items-center {{ $active ? 'bg-blue-600/50' : '' }} text-sm rounded-xl font-bold w-full px-4 py-2" {{ $attributes->merge(['href']) }}>
+        <i class="fa-solid fa-{{ $icon }} text-xl text-white"></i>
         <span class="ml-4 capitalize">{{ $menu }}</span>
     </a>
 </li>

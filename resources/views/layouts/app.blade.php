@@ -23,7 +23,7 @@
             @include('components.sidebar.nav')
             <div class="flex flex-col flex-1 overflow-x-hidden">
                 @include('components.header.dashboard')
-                <main class="h-full overflow-y-auto pt-4">
+                <main class="h-full overflow-y-auto pt-4 animate-fade-in animation-duration-300">
                     <div class="flex justify-between items-center xl:container mx-auto px-4 sm:px-6 md:pt-4 pb-0 lg:px-8">
                         <div class="hidden md:block text-2xl capitalize text-gray-700 font-bold">
                             {{ $title }}

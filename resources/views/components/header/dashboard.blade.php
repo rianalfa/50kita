@@ -1,5 +1,5 @@
-<div>
-    <nav class="bg-white border-b shadow">
+<div class="py-2 pl-2 lg:pl-0 pr-2">
+    <nav class="bg-white border-b shadow rounded-md">
         <div class="2xl:container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex items-center">
