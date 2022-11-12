@@ -2,6 +2,8 @@
 
 use App\Http\Livewire\Helpdesk\Main as HelpdeskMain;
 use App\Http\Livewire\Notifications\Show;
+use App\Http\Livewire\Team\Detail as TeamDetail;
+use App\Http\Livewire\Team\Show as TeamShow;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -34,5 +36,10 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
     Route::name('helpdesk.')->group(function() {
         Route::get('', HelpdeskMain::class)->name('main');
+    });
+
+    Route::prefix('teams')->group(function() {
+        Route::get('', TeamShow::class)->name('teams.main');
+        Route::get('/{id}', TeamDetail::class)->name('teams.detail');
     });
 });

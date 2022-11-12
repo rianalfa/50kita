@@ -71,4 +71,12 @@ class User extends Authenticatable
     public function interferences() {
         return $this->hasMany(Interference::class);
     }
+
+    public function teams() {
+        return $this->hasMany(UserTeam::class);
+    }
+
+    public function tasks() {
+        return $this->hasMany(Task::class);
+    }
 }

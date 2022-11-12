@@ -29,7 +29,7 @@
                             {{ $title }}
                         </div>
                         @isset($button)
-                            {{ $button }}
+                            {!! $button !!}
                         @endisset
                     </div>
                     <div class="xl:container mx-auto px-4 md:px-6 lg:px-8 pt-4 pb-8">
