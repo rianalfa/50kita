@@ -7,6 +7,7 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
+use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 
 class TeamTasksTable extends DataTableComponent
 {
@@ -49,6 +50,87 @@ class TeamTasksTable extends DataTableComponent
         } catch (\Exception $e) {
             $this->emit('error', 'Gagal menghapus pekerjaan');
         }
+    }
+
+    public function filters(): array
+    {
+        return [
+            SelectFilter::make('Tahun')
+                ->options([
+                    '' => 'Semua',
+                    '2022' => '2022',
+                    '2023' => '2023',
+                    '2024' => '2024',
+                    '2025' => '2025',
+                    '2026' => '2026',
+                    '2027' => '2027',
+                ])->filter(function (Builder $builder, string $value) {
+                    if (!empty($value)) {
+                        $builder->where(function ($query) use ($value) {
+                                $query->whereYear('start_from', $value)
+                                    ->where('team_id', $this->teamId);
+                            })->orWhere(function ($query) use ($value) {
+                                $query->whereYear('due_date', $value)
+                                    ->where('team_id', $this->teamId);
+                            });
+                    } else {
+                        $builder->where('team_id', $this->teamId);
+                    }
+                }),
+            SelectFilter::make('Bulan')
+                ->options([
+                    '' => 'Semua',
+                    '01' => 'Januari',
+                    '02' => 'Februari',
+                    '03' => 'Maret',
+                    '04' => 'April',
+                    '05' => 'Mei',
+                    '06' => 'Juni',
+                    '07' => 'Juli',
+                    '08' => 'Agustus',
+                    '09' => 'September',
+                    '10' => 'Oktober',
+                    '11' => 'November',
+                    '12' => 'Desember',
+                ])->filter(function (Builder $builder, string $value) {
+                    if (!empty($value)) {
+                        $builder->where(function ($query) use ($value) {
+                            $query->whereMonth('start_from', $value)
+                                ->where('team_id', $this->teamId);
+                        })->orWhere(function ($query) use ($value) {
+                            $query->whereMonth('due_date', $value)
+                                ->where('team_id', $this->teamId);
+                        });
+                    } else {
+                        $builder->where('team_id', $this->teamId);
+                    }
+                }),
+            SelectFilter::make('Progress')
+                ->options([
+                    '' => 'Semua',
+                    '0' => 'Belum Dikerjakan',
+                    '25' => 'Dibawah 50%',
+                    '75' => 'Diatas 50%',
+                    '100' => 'Selesai'
+                ])->filter(function (Builder $builder, string $value) {
+                    if ($value !== '' || $value !== NULL) {
+                        $builder->where('team_id', $this->teamId)
+                            ->where(function ($query) use ($value) {
+                                if ($value == '0') {
+                                    $query->where('progress', '0');
+                                } elseif ($value == '25') {
+                                    $query->where('progress', '<', '50');
+                                } elseif ($value == '75') {
+                                    $query->where('progress', '>=', '50');
+                                } elseif ($value == '100') {
+                                    $query->where('progress', '100');
+                                }
+                            });
+                    } else {
+                        $builder->where('team_id', $this->teamId);
+                    }
+                })
+        ];
     }
 
     public function columns(): array
