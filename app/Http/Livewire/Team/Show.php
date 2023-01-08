@@ -20,10 +20,13 @@ class Show extends Component
 
     public function reload() {
         if ($this->type) {
-            $this->teams = auth()->user()->team->teams->get() ?? [];
+            $this->teams = Team::join('user_teams', 'user_teams.id', '=', 'teams.id')
+                                ->where('user_teams.user_id', auth()->user()->id)
+                                ->get() ?? [];
         } else {
             $this->teams = Team::get() ?? [];
         }
+        $this->emit('consolelog', $this->type);
     }
 
     public function openTeamDetail($id) {

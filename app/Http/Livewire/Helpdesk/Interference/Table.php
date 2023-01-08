@@ -68,7 +68,7 @@ class Table extends DataTableComponent
     }
 
     public function acceptInterference($id) {
-        if (auth()->user()->hasRole('ipds')) {
+        if (auth()->user()->hasRole('admin')) {
             try {
                 if (in_array(Interference::whereId($id)->first()->status, [0,1])) {
                     $this->emit('openModal', 'helpdesk.interference.accept-modal', ['id' => $id]);
@@ -82,7 +82,7 @@ class Table extends DataTableComponent
     }
 
     public function rejectInterference($id) {
-        if (auth()->user()->hasRole('ipds')) {
+        if (auth()->user()->hasRole('admin')) {
             try {
                 if (Interference::whereId($id)->first()->status == 0) {
                     $this->emit('openModal', 'helpdesk.interference.reject-modal', ['id' => $id]);
@@ -96,7 +96,7 @@ class Table extends DataTableComponent
     }
 
     public function finishInterference($id) {
-        if (auth()->user()->hasRole('ipds')) {
+        if (auth()->user()->hasRole('admin')) {
             try {
                 Interference::whereId($id)->update([
                     'status' => 3,

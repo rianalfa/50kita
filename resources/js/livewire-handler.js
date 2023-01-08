@@ -11,3 +11,7 @@ Livewire.on("success", (message) => {
     notyf.success(message);
 });
 
+Livewire.on("consolelog", (message) => {
+    console.log(message);
+});
+

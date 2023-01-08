@@ -16,7 +16,7 @@
     <div class="flex flex-col justify-center space-y-4">
         <div class="flex justify-between items-center">
             <p class="text-base md:text-lg font-semibold">Anggota</p>
-            @if (auth()->user()->hasRole('ipds') || $chief->id==auth()->user()->id)
+            @if (auth()->user()->hasRole('admin') || $chief->id==auth()->user()->id)
                 <x-button.primary wire:click="$emit('openModal', 'team.team-member-modal', {{ json_encode(['teamId' => $team->id]) }})">
                     + Anggota
                 </x-button.primary>
@@ -24,8 +24,10 @@
         </div>
         <livewire:team.team-members-table id="{{ $team->id }}" />
     </div>
-    <div class="flex flex-col justify-center space-y-4">
-        <p class="text-base md:text-lg font-semibold">Pekerjaan</p>
-        <livewire:team.team-tasks-table id="{{ $team->id }}" />
-    </div>
+    @if (!empty(\App\Models\UserTeam::where('user_id', auth()->user()->id)->where('team_id', $team->id)->first() ?? []))
+        <div class="flex flex-col justify-center space-y-4">
+            <p class="text-base md:text-lg font-semibold">Pekerjaan</p>
+            <livewire:team.team-tasks-table id="{{ $team->id }}" />
+        </div>
+    @endif
 </div>

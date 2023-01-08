@@ -4,6 +4,7 @@ use App\Http\Livewire\Helpdesk\Main as HelpdeskMain;
 use App\Http\Livewire\Notifications\Show;
 use App\Http\Livewire\Team\Detail as TeamDetail;
 use App\Http\Livewire\Team\Show as TeamShow;
+use App\Http\Livewire\User\UserList;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::get('/users', UserList::class)->name('users');
 
     Route::get('notifications', Show::class)
         ->name('notifications');

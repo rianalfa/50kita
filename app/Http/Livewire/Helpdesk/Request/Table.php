@@ -19,7 +19,7 @@ class Table extends DataTableComponent
     protected $model = Request::class;
 
     public function query(): Builder {
-        if (auth()->user()->hasRole('ipds')) {
+        if (auth()->user()->hasRole('admin')) {
             return Request::with('user');
         } else {
             return Request::with('user')
@@ -79,7 +79,7 @@ class Table extends DataTableComponent
     }
 
     public function acceptRequest($id) {
-        if (auth()->user()->hasRole('ipds')) {
+        if (auth()->user()->hasRole('admin')) {
             try {
                 if (in_array(Request::whereId($id)->first()->status, [0,1])) {
                     $this->emit('openModal', 'helpdesk.request.accept-modal', ['id' => $id]);
@@ -93,7 +93,7 @@ class Table extends DataTableComponent
     }
 
     public function rejectRequest($id) {
-        if (auth()->user()->hasRole('ipds')) {
+        if (auth()->user()->hasRole('admin')) {
             try {
                 if (Request::whereId($id)->first()->status == 0) {
                     $this->emit('openModal', 'helpdesk.request.reject-modal', ['id' => $id]);
@@ -107,7 +107,7 @@ class Table extends DataTableComponent
     }
 
     public function finishRequest($id) {
-        if (auth()->user()->hasRole('ipds')) {
+        if (auth()->user()->hasRole('admin')) {
             try {
                 Request::whereId($id)->update([
                     'status' => 3,

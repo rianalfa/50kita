@@ -213,6 +213,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'RequestConstant' => App\Constants\Request::class,
+        'AddressConstant' => App\Constants\Address::class,
         'TeamIconColorConstant' => App\Constants\TeamIconColor::class,
     ])->toArray(),
 

@@ -26,7 +26,7 @@
         </div>
         <div class="flex w-full">
             @php
-                if (auth()->user()->hasRole('ipds')) {
+                if (auth()->user()->hasRole('admin')) {
                     $requests = \App\Models\Request::first() ?? [];
                 } else {
                     $requests = \App\Models\Request::where('user_id', auth()->user()->id)

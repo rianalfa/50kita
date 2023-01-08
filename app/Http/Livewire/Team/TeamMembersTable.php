@@ -37,7 +37,7 @@ class TeamMembersTable extends DataTableComponent
 
     public function makeChief($userId) {
         try {
-            if (auth()->user()->hasRole('ipds')) {
+            if (auth()->user()->hasRole('admin')) {
                 $team = Team::whereId($this->teamId)->first();
                 $users = $team->users()->get() ?? [];
 
@@ -62,7 +62,7 @@ class TeamMembersTable extends DataTableComponent
                         ->where('team_id', $this->teamId)
                         ->first() ?? [];
 
-            if (auth()->user()->hasRole('ipds') || (!empty($user) && $user->position=='Ketua')) {
+            if (auth()->user()->hasRole('admin') || (!empty($user) && $user->position=='Ketua')) {
                 $user = UserTeam::where('user_id', $userId)->first() ?? [];
                 if ($user->position=='Anggota') {
                     Task::where('user_id', $user->user_id)
