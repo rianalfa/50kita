@@ -10,7 +10,7 @@
                     ->first() ?? [];
     @endphp
     @if (auth()->user()->hasRole('admin') || (!empty($user) && $user->position=='Ketua'))
-        <x-badge.primary class="cursor-pointer w-24 hover:scale-105 transition-transform duration-200 delay-75" text="beri pekerjaan"
+        <x-badge.primary class="cursor-pointer w-24 hover:scale-105 transition-transform duration-200 delay-75" text="beri tugas"
             wire:click="$emit('openModal', 'task.task-modal', {{ json_encode([
                 'teamId' => $row->team_id,
                 'userId' => $row->user_id,

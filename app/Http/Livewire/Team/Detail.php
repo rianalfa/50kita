@@ -9,15 +9,23 @@ use Livewire\Component;
 
 class Detail extends Component
 {
+    public $teamId;
+    public $type;
     protected $team;
     protected $chief;
 
     public function mount($id) {
-        $this->team = Team::whereId($id)->first();
+        $this->teamId = $id;
+        $this->type = 0;
+    }
+
+    public function reload() {
+        $this->team = Team::whereId($this->teamId)->first();
 
         $chief = UserTeam::where('team_id', $this->team->id)
-                    ->where('position', 'Ketua')
-                    ->first() ?? [];
+                        ->where('position', 'Ketua')
+                        ->first() ?? [];
+
         if (!empty($chief)) {
             $this->chief = User::whereId($chief->user_id)->first() ?? new User();
             $this->chief->id = 0;
@@ -29,6 +37,7 @@ class Detail extends Component
 
     public function render()
     {
+        $this->reload();
         return view('livewire.team.detail', [
             'team' => $this->team,
             'chief' => $this->chief,

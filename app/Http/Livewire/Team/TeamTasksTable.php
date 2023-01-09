@@ -37,18 +37,18 @@ class TeamTasksTable extends DataTableComponent
     public function deleteTask($id) {
         try {
             $task = Task::whereId($id)->first();
-            if ($task->progress == 0) {
+            if ($task->progress == 0 || auth()->user()->hasRole('admin')) {
                 $task->delete();
 
-                $this->emit('success', 'Berhasil menghapus pekerjaan');
+                $this->emit('success', 'Berhasil menghapus tugas');
                 $this->emitTo('team.team-members-table', 'reloadTable');
                 $this->emitTo('team.team-tasks-table', 'reloadTable');
                 $this->emit('closeModal');
             } else {
-                $this->emit('error', 'Pekerjaan sudah dalam proses pengerjaan');
+                $this->emit('error', 'Tugas sudah dalam proses pengerjaan');
             }
         } catch (\Exception $e) {
-            $this->emit('error', 'Gagal menghapus pekerjaan');
+            $this->emit('error', 'Gagal menghapus tugas');
         }
     }
 

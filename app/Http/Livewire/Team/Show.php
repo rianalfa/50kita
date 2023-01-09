@@ -26,7 +26,6 @@ class Show extends Component
         } else {
             $this->teams = Team::get() ?? [];
         }
-        $this->emit('consolelog', $this->type);
     }
 
     public function openTeamDetail($id) {

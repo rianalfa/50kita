@@ -1,5 +1,5 @@
 <div>
-    <x-modal.header title="Pekerjaan"></x-modal.header>
+    <x-modal.header title="Tugas"></x-modal.header>
     <x-modal.body>
         <x-input.wrapper>
             <x-input.label for="task.title" value="Judul" />

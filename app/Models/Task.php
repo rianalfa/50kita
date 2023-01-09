@@ -25,6 +25,6 @@ class Task extends Model
     }
 
     public function team() {
-        return $this->belongsTo(Task::class);
+        return $this->belongsTo(Team::class);
     }
 }

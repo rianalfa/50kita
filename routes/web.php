@@ -38,7 +38,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         ->name('notifications');
 
     Route::name('helpdesk.')->group(function() {
-        Route::get('', HelpdeskMain::class)->name('main');
+        Route::get('/helpdesk', HelpdeskMain::class)->name('main');
     });
 
     Route::prefix('teams')->group(function() {

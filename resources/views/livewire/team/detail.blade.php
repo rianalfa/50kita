@@ -1,19 +1,22 @@
-<div class="flex flex-col relative space-y-4 md:space-y-8">
-    <div class="flex flex-col items-center space-y-0 md:space-y-2">
-        <div class="flex justify-center items-center space-x-4 md:space-4">
-            <p class="text-xl md:text-3xl font-bold">{{ $team->name }}</p>
-            <div class="grid place-content-center bg-{{ $team->color }} rounded-lg md:rounded-2xl w-10 md:w-12 h-10 md:h-12">
-                <i class="fa-solid fa-{{ $team->icon }} text-lg md:text-2xl
-                    {{ ((int)explode('-', $team->color)[1] >= 500) ? 'text-white' : '' }}"></i>
+<div class="flex flex-col relative space-y-4 md:space-y-12">
+    <div class="flex flex-col space-y-4 bg-white rounded-xl px-4 py-8">
+        <div class="flex flex-col items-center space-y-0 md:space-y-2">
+            <div class="flex justify-center items-center space-x-4 md:space-4">
+                <p class="text-xl md:text-3xl font-bold">{{ $team->name }}</p>
+                <div class="grid place-content-center bg-{{ $team->color }} rounded-lg md:rounded-2xl w-10 md:w-12 h-10 md:h-12">
+                    <i class="fa-solid fa-{{ $team->icon }} text-lg md:text-2xl
+                        {{ ((int)explode('-', $team->color)[1] >= 500) ? 'text-white' : '' }}"></i>
+                </div>
             </div>
+            <p class="text-gray-400 text-base md:text-xl font-semibold">RO: {{ $team->ro }}</p>
         </div>
-        <p class="text-gray-400 text-base md:text-xl font-semibold">RO: {{ $team->ro }}</p>
+        <p class="text-sm md:text-base text-gray-600 w-full max-w-2xl mx-auto">
+            <span class="text-black font-bold">Deskripsi tim:</span>
+            {{ $team-> description }}
+        </p>
     </div>
-    <p class="text-sm md:text-base text-gray-600 w-full max-w-2xl mx-auto">
-        <span class="text-black font-bold">Deskripsi tim:</span>
-        {{ $team-> description }}
-    </p>
-    <div class="flex flex-col justify-center space-y-4">
+
+    <div class="flex flex-col justify-center space-y-4 bg-white rounded-xl p-4">
         <div class="flex justify-between items-center">
             <p class="text-base md:text-lg font-semibold">Anggota</p>
             @if (auth()->user()->hasRole('admin') || $chief->id==auth()->user()->id)
@@ -24,10 +27,16 @@
         </div>
         <livewire:team.team-members-table id="{{ $team->id }}" />
     </div>
+
     @if (!empty(\App\Models\UserTeam::where('user_id', auth()->user()->id)->where('team_id', $team->id)->first() ?? []))
-        <div class="flex flex-col justify-center space-y-4">
-            <p class="text-base md:text-lg font-semibold">Pekerjaan</p>
-            <livewire:team.team-tasks-table id="{{ $team->id }}" />
+        <div class="flex flex-col justify-center space-y-4 bg-white rounded-xl p-4">
+            <p class="text-base md:text-lg font-semibold">Tugas</p>
+            <x-input.toggle text="Tugas Saya" wire:model="type" />
+            @if ($type)
+                <livewire:team.team-my-tasks-table teamId="{{ $team->id }}" />
+            @else
+                <livewire:team.team-tasks-table id="{{ $team->id }}" />
+            @endif
         </div>
     @endif
 </div>
