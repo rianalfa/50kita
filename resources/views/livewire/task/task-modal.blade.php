@@ -2,6 +2,26 @@
     <x-modal.header title="Tugas"></x-modal.header>
     <x-modal.body>
         <x-input.wrapper>
+            <x-input.label for="task.team_id" value="Pelaksana" />
+            <x-input.select name="team_id" wire:model="task.team_id">
+                @foreach (\App\Models\Team::get() as $team)
+                    <option value="{{ $team->id }}">{{ $team->name }}</option>
+                @endforeach
+            </x-input.select>
+            <x-input.error for="task.team_id" />
+        </x-input.wrapper>
+
+        <x-input.wrapper>
+            <x-input.label for="task.user_id" value="Pelaksana" />
+            <x-input.select name="user_id" wire:model.defer="task.user_id">
+                @foreach (\App\Models\UserTeam::where('team_id', $task->team_id)->get() as $user)
+                    <option value="{{ $user->user_id }}">{{ $user->user->name }}</option>
+                @endforeach
+            </x-input.select>
+            <x-input.error for="task.user_id" />
+        </x-input.wrapper>
+
+        <x-input.wrapper>
             <x-input.label for="task.title" value="Judul" />
             <x-input.text name="title" wire:model.defer="task.title" />
             <x-input.error for="task.title" />

@@ -45,6 +45,7 @@
         @stack('modals')
 
         @livewireScripts
+        @livewireCalendarScripts
         @vite(['resources/js/livewire-handler.js'])
         @stack('scripts')
     </body>

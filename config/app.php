@@ -196,7 +196,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
-
+        \Asantibanez\LivewireCalendar\LivewireCalendarServiceProvider::class,
     ],
 
     /*
@@ -212,6 +212,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        "LivewireCalendar" => \Asantibanez\LivewireCalendar\LivewireCalendarFacade::class,
         'RequestConstant' => App\Constants\Request::class,
         'AddressConstant' => App\Constants\Address::class,
         'TeamIconColorConstant' => App\Constants\TeamIconColor::class,

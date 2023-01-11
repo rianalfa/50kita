@@ -36,7 +36,7 @@
                 <x-input.toggle text="Tugas Saya" wire:model="myTasks" />
             </div>
             @if ($tableCalendar)
-
+                <livewire:team.team-tasks-calendar teamId="{{ $team->id }}" />
             @else
                 @if ($myTasks)
                     <livewire:task.my-tasks-table teamId="{{ $team->id }}" />

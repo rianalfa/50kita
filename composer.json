@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "asantibanez/livewire-calendar": "*",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
         "laravel/jetstream": "^2.12",
@@ -29,7 +30,8 @@
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
+            "Database\\Seeders\\": "database/seeders/",
+            "Asantibanez\\LivewireCalendar\\": "vendor/asantibanez/livewire-calendar/src/"
         }
     },
     "autoload-dev": {
@@ -66,5 +68,6 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [{ "type": "package", "canonical": false, "package": { "version": "master", "name": "asantibanez/livewire-calendar", "source": { "url": "https://github.com/Butochnikov/livewire-calendar.git", "type": "git", "reference": "master" } } }]
 }
