@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Team;
+namespace App\Http\Livewire\Task;
 
 use App\Models\Task;
 use App\Models\UserTeam;
@@ -8,14 +8,12 @@ use Asantibanez\LivewireCalendar\LivewireCalendar;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 
-class TeamTasksCalendar extends LivewireCalendar
+class MyTasksCalendar extends LivewireCalendar
 {
-    public $teamId;
-
     public function events(): Collection
     {
         return Task::query()
-            ->where('team_id', $this->teamId)
+            ->where('user_id', auth()->user()->id)
             ->whereDate('due_date', '>=', $this->gridStartsAt)
             ->whereDate('due_date', '<=', $this->gridEndsAt)
             ->get()
@@ -30,9 +28,10 @@ class TeamTasksCalendar extends LivewireCalendar
     }
 
     public function onEventClick($taskId) {
+        $task = Task::whereId($taskId)->first();
         $userTeam = UserTeam::where('user_id', auth()->user()->id)
-                        ->where('team_id', $this->teamId)
-                        ->first();
+                            ->where('team_id', $task->team_id)
+                            ->first();
 
         if (auth()->user()->hasRole('admin') || $userTeam->position == 'Ketua') {
             $this->emit('openModal', 'team.team-tasks-calendar-event-modal', ['taskId' => $taskId]);
@@ -43,11 +42,7 @@ class TeamTasksCalendar extends LivewireCalendar
 
     public function onDayClick($year, $month, $day)
     {
-        $userTeam = UserTeam::where('user_id', auth()->user()->id)
-                        ->where('team_id', $this->teamId)
-                        ->first();
-
-        if (auth()->user()->hasRole('admin') || $userTeam->position == 'Ketua')
+        if (auth()->user()->hasRole('admin'))
             $this->emit('openModal', 'task.task-modal', ['teamId' => $this->teamId, 'startFrom' => $year."-".$month."-".$day]);
     }
 }

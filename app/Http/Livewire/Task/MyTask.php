@@ -6,6 +6,12 @@ use Livewire\Component;
 
 class MyTask extends Component
 {
+    public $tableCalendar;
+
+    public function mount() {
+        $this->tableCalendar = false;
+    }
+
     public function render()
     {
         return view('livewire.task.my-task')
