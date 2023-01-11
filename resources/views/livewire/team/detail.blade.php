@@ -30,12 +30,19 @@
 
     @if (!empty(\App\Models\UserTeam::where('user_id', auth()->user()->id)->where('team_id', $team->id)->first() ?? []))
         <div class="flex flex-col justify-center space-y-4 bg-white rounded-xl p-4">
-            <p class="text-base md:text-lg font-semibold">Tugas</p>
-            <x-input.toggle text="Tugas Saya" wire:model="type" />
-            @if ($type)
-                <livewire:team.team-my-tasks-table teamId="{{ $team->id }}" />
+            <p class="text-base md:text-lg font-semibold">Tugas Tim</p>
+            <div class="flex justify-between my-4">
+                <x-input.toggle text="Kalender" leftText="Tabel" wire:model="tableCalendar" />
+                <x-input.toggle text="Tugas Saya" wire:model="myTasks" />
+            </div>
+            @if ($tableCalendar)
+
             @else
-                <livewire:team.team-tasks-table id="{{ $team->id }}" />
+                @if ($myTasks)
+                    <livewire:task.my-tasks-table teamId="{{ $team->id }}" />
+                @else
+                    <livewire:team.team-tasks-table id="{{ $team->id }}" />
+                @endif
             @endif
         </div>
     @endif

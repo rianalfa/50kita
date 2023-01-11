@@ -2,6 +2,7 @@
 
 use App\Http\Livewire\Helpdesk\Main as HelpdeskMain;
 use App\Http\Livewire\Notifications\Show;
+use App\Http\Livewire\Task\MyTask;
 use App\Http\Livewire\Team\Detail as TeamDetail;
 use App\Http\Livewire\Team\Show as TeamShow;
 use App\Http\Livewire\User\UserList;
@@ -45,4 +46,6 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         Route::get('', TeamShow::class)->name('teams.main');
         Route::get('/{id}', TeamDetail::class)->name('teams.detail');
     });
+
+    Route::get('tasks', MyTask::class)->name('tasks');
 });

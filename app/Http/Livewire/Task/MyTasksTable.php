@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Team;
+namespace App\Http\Livewire\Task;
 
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
@@ -8,7 +8,7 @@ use App\Models\Task;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 
-class TeamMyTasksTable extends DataTableComponent
+class MyTasksTable extends DataTableComponent
 {
     protected $model = Task::class;
     public $teamId;
@@ -61,7 +61,22 @@ class TeamMyTasksTable extends DataTableComponent
                             }
                         });
                 }),
-            ];
+            SelectFilter::make('Progress')
+                ->options([
+                    '' => 'Semua',
+                    '<' => 'Belum Selesai',
+                    '=' => 'Selesai',
+                ])->filter(function (Builder $builder, string $value) {
+                    $builder->where('user_id', auth()->user()->id)
+                        ->where(function($query) {
+                            if ($this->teamId) $query->where('team_id', $this->teamId);
+                        })->where(function($query) use ($value) {
+                            if (!empty($value)) {
+                                $query->where('progress', $value, 100);
+                            }
+                        });
+                }),
+        ];
     }
 
     public function columns(): array
@@ -72,19 +87,25 @@ class TeamMyTasksTable extends DataTableComponent
             Column::make("Tim", "team.name")
                 ->searchable()
                 ->sortable()
-                ->hideIf($this->teamId),
+                ->hideIf($this->teamId ?? FALSE),
             Column::make("Judul", "title"),
             Column::make("Tanggal Mulai", "start_from")
-                ->sortable(),
+                ->sortable()
+                ->format(
+                    fn($value, $row, Column $column) => "<p class='text-center'>".$value."</p>"
+                )->html(),
             Column::make("Tanggal Selesai", "due_date")
-                ->sortable(),
+                ->sortable()
+                ->format(
+                    fn($value, $row, Column $column) => "<p class='text-center'>".$value."</p>"
+                )->html(),
             Column::make("Progress", "progress")
                 ->sortable()
-                ->view('livewire.team.team-tasks-table-progress'),
+                ->view('livewire.team.column.team-tasks-table-progress'),
             Column::make("Attachment", "attachment")
                 ->isHidden(),
             Column::make("Action")
-            ->label(fn($row, Column $column) => view('livewire.team.team-tasks-table-action')->withRow($row)),
+            ->label(fn($row, Column $column) => view('livewire.team.column.team-tasks-table-action')->withRow($row)),
         ];
     }
 }

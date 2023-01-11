@@ -17,6 +17,13 @@
             </x-input.select>
             <x-input.error for="userTeam.user_id" />
         </x-input.wrapper>
+        <x-input.wrapper>
+            <x-input.label for="userTeam.position" value="Jabatan" />
+            <x-input.select name="position" wire:model.defer="userTeam.position">
+                <option value="Anggota">Anggota</option>
+                <option value="Mitra">Mitra</option>
+            </x-input.select>
+        </x-input.wrapper>
     </x-modal.body>
     <x-modal.footer bordered>
         <x-button.primary wire:click="saveNewMember()">

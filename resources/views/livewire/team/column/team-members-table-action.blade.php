@@ -1,6 +1,6 @@
-<div class="flex flex-col justify-center space-y-2">
+<div class="grid place-items-center gap-2">
     @role('admin')
-        <x-badge.success class="cursor-pointer w-24 hover:scale-105 transition-transform duration-200 delay-75" text="jadikan ketua"
+        <x-badge.success class="cursor-pointer hover:scale-105 transition-transform duration-200 delay-75" text="jadikan ketua"
             wire:click="makeChief({{ $row->user_id }})" />
     @endrole
 
@@ -10,14 +10,14 @@
                     ->first() ?? [];
     @endphp
     @if (auth()->user()->hasRole('admin') || (!empty($user) && $user->position=='Ketua'))
-        <x-badge.primary class="cursor-pointer w-24 hover:scale-105 transition-transform duration-200 delay-75" text="beri tugas"
+        <x-badge.primary class="cursor-pointer hover:scale-105 transition-transform duration-200 delay-75" text="beri tugas"
             wire:click="$emit('openModal', 'task.task-modal', {{ json_encode([
                 'teamId' => $row->team_id,
                 'userId' => $row->user_id,
             ]) }})" />
 
         @if ($row->position != 'Ketua')
-            <x-badge.error class="cursor-pointer w-24 hover:scale-105 transition-transform duration-200 delay-75" text="hapus"
+            <x-badge.error class="cursor-pointer hover:scale-105 transition-transform duration-200 delay-75" text="hapus"
                 wire:click="deleteMember({{ $row->user_id }})" />
         @endif
     @endif

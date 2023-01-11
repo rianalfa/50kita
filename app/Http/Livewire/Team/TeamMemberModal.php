@@ -15,10 +15,13 @@ class TeamMemberModal extends ModalComponent
 
     protected $rules = [
         'userTeam.user_id' => 'required|exists:users,id',
+        'userTeam.position' => 'required|string',
     ];
 
     public function mount($teamId) {
         $this->userTeam = new UserTeam();
+        $this->userTeam->position = "Anggota";
+
         $this->teamId = $teamId;
 
         $this->users = User::get() ?? [];
@@ -33,7 +36,6 @@ class TeamMemberModal extends ModalComponent
                             ->first() ?? [];
             if (empty($userTeam)) {
                 $this->userTeam->team_id = $this->teamId;
-                $this->userTeam->position = "Anggota";
                 $this->userTeam->save();
 
                 $this->emit('success', 'Anggota berhasil ditambah');

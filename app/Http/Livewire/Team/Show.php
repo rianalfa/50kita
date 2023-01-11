@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class Show extends Component
 {
-    public $type;
+    public $myTeams;
     protected $teams;
 
     protected $listeners = [
@@ -15,11 +15,11 @@ class Show extends Component
     ];
 
     public function mount() {
-        $this->type = false;
+        $this->myTeams = false;
     }
 
     public function reload() {
-        if ($this->type) {
+        if ($this->myTeams) {
             $this->teams = Team::join('user_teams', 'user_teams.id', '=', 'teams.id')
                                 ->where('user_teams.user_id', auth()->user()->id)
                                 ->get() ?? [];

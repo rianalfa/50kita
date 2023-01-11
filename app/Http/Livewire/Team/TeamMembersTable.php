@@ -63,8 +63,11 @@ class TeamMembersTable extends DataTableComponent
                         ->first() ?? [];
 
             if (auth()->user()->hasRole('admin') || (!empty($user) && $user->position=='Ketua')) {
-                $user = UserTeam::where('user_id', $userId)->first() ?? [];
-                if ($user->position=='Anggota') {
+                $user = UserTeam::where('user_id', $userId)
+                            ->where('team_id', $this->teamId)
+                            ->first() ?? [];
+
+                if ($user->position != 'Ketua') {
                     Task::where('user_id', $user->user_id)
                         ->where('team_id', $user->team_id)
                         ->delete();
@@ -94,11 +97,14 @@ class TeamMembersTable extends DataTableComponent
                 ->searchable()
                 ->sortable(),
             Column::make("Posisi", "position")
-                ->sortable(),
+                ->sortable()
+                ->format(
+                    fn($value, $row, Column $column) => "<p class='text-center'>".$value."</p>"
+                )->html(),
             Column::make("Beban Kerja")
-                ->label(fn($row, Column $column) => view('livewire.team.team-members-table-tasks')->withRow($row)),
+                ->label(fn($row, Column $column) => view('livewire.team.column.team-members-table-tasks')->withRow($row)),
             Column::make("Actions")
-                ->label(fn($row, Column $column) => view('livewire.team.team-members-table-action')->withRow($row)),
+                ->label(fn($row, Column $column) => view('livewire.team.column.team-members-table-action')->withRow($row)),
         ];
     }
 }

@@ -10,13 +10,15 @@ use Livewire\Component;
 class Detail extends Component
 {
     public $teamId;
-    public $type;
+    public $myTasks;
+    public $tableCalendar;
     protected $team;
     protected $chief;
 
     public function mount($id) {
         $this->teamId = $id;
-        $this->type = 0;
+        $this->myTasks = false;
+        $this->tableCalendar = false;
     }
 
     public function reload() {

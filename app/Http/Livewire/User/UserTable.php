@@ -37,6 +37,9 @@ class UserTable extends DataTableComponent
             Column::make("Jabatan")->label(
                 fn($row, Column $column) => view('livewire.user.column.user-list-role')->withRow($row)
             ),
+            Column::make("Tim")->label(
+                fn($row, Column $column) => view('livewire.user.column.user-list-team')->withRow($row)
+            ),
             Column::make("Aksi")->label(
                 fn($row, Column $column) => view('livewire.user.column.user-list-action')->withRow($row)
             )->hideIf(!auth()->user()->hasRole('admin')),

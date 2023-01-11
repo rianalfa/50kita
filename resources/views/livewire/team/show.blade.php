@@ -1,6 +1,6 @@
 <div class="flex flex-col space-y-4 md:space-y-8 relative">
     <div class="flex flex-col md:flex-row justify-between items-center">
-        <x-input.toggle text="Tim Saya" wire:model="type" />
+        <x-input.toggle text="Tim Saya" wire:model="myTeams" />
         @role('admin')
             <x-button.primary wire:click="$emit('openModal', 'team.team-modal')">
                 Buat Tim

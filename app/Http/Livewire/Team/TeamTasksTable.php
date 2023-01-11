@@ -146,16 +146,22 @@ class TeamTasksTable extends DataTableComponent
                 ->isHidden(),
             Column::make("Judul", "title"),
             Column::make("Tanggal Mulai", "start_from")
-                ->sortable(),
+                ->sortable()
+                ->format(
+                    fn($value, $row, Column $column) => "<p class='text-center'>".$value."</p>"
+                )->html(),
             Column::make("Tanggal Selesai", "due_date")
-                ->sortable(),
+                ->sortable()
+                ->format(
+                    fn($value, $row, Column $column) => "<p class='text-center'>".$value."</p>"
+                )->html(),
             Column::make("Progress", "progress")
                 ->sortable()
-                ->view('livewire.team.team-tasks-table-progress'),
+                ->view('livewire.team.column.team-tasks-table-progress'),
             Column::make("Attachment", "attachment")
                 ->isHidden(),
             Column::make("Action")
-                ->label(fn($row, Column $column) => view('livewire.team.team-tasks-table-action')->withRow($row)),
+                ->label(fn($row, Column $column) => view('livewire.team.column.team-tasks-table-action')->withRow($row)),
         ];
     }
 }
