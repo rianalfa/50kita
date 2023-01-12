@@ -5,6 +5,7 @@
     @if (!$tableCalendar)
         <livewire:task.my-tasks-table />
     @else
-        <livewire:task.my-tasks-calendar />
+        <livewire:task.my-tasks-calendar
+            before-calendar-view="livewire/task/calendar-month-buttons" />
     @endif
 </div>
