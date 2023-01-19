@@ -8,6 +8,11 @@
         @endphp
 
         <div class="grid grid-cols-1 lg:grid-cols-6 gap-2">
+            <p>Tim:</p>
+            <div class="flex justify-end items-center col-span-1 lg:col-span-5">
+                <p>{{ $task->team->name }}</p>
+            </div>
+
             @if ($task->user_id != auth()->user()->id)
                 <p>Pelaksana:</p>
                 <div class="flex justify-end items-center col-span-1 lg:col-span-5">

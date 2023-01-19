@@ -3,9 +3,9 @@
         <x-input.toggle wire:model="tableCalendar" leftText="Tabel" text="Kalender" />
     </div>
     @if (!$tableCalendar)
-        <livewire:task.my-tasks-table />
+        <livewire:team.team-tasks-table teamId="" userId="{{ auth()->user()->id }}" />
     @else
-        <livewire:task.my-tasks-calendar
+        <livewire:team.team-tasks-calendar teamId="" userId="{{ auth()->user()->id }}"
             before-calendar-view="livewire/task/calendar-month-buttons" />
     @endif
 </div>
