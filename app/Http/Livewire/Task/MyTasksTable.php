@@ -19,7 +19,7 @@ class MyTasksTable extends DataTableComponent
 
     public function builder(): Builder {
         return Task::query()
-            ->where('user_id', auth()->user()->id)
+            ->where('tasks.user_id', auth()->user()->id)
             ->where(function($query) {
                 if ($this->teamId) $query->where('team_id', $this->teamId);
             })->select();
@@ -49,7 +49,7 @@ class MyTasksTable extends DataTableComponent
                     '11' => 'November',
                     '12' => 'Desember',
                 ])->filter(function (Builder $builder, string $value) {
-                    $builder->where('user_id', auth()->user()->id)
+                    $builder->where('tasks.user_id', auth()->user()->id)
                         ->where(function($query) {
                             if ($this->teamId) $query->where('team_id', $this->teamId);
                         })->where(function($query) use ($value) {
@@ -67,12 +67,32 @@ class MyTasksTable extends DataTableComponent
                     '<' => 'Belum Selesai',
                     '=' => 'Selesai',
                 ])->filter(function (Builder $builder, string $value) {
-                    $builder->where('user_id', auth()->user()->id)
+                    $builder->where('tasks.user_id', auth()->user()->id)
                         ->where(function($query) {
                             if ($this->teamId) $query->where('team_id', $this->teamId);
                         })->where(function($query) use ($value) {
                             if (!empty($value)) {
                                 $query->where('progress', $value, 100);
+                            }
+                        });
+                }),
+            SelectFilter::make('Surat')
+                ->options([
+                    NULL => 'Semua',
+                    0 => 'Belum diunggah',
+                    1 => 'Belum diterima',
+                    2 => 'Belum dibayar',
+                    3 => 'Sudah dibayar',
+                ])->filter(function (Builder $builder, $value) {
+                    $builder->where('tasks.user_id', auth()->user()->id)
+                        ->where(function($query) {
+                            if ($this->teamId) $query->where('team_id', $this->teamId);
+                        })->where(function($query) use ($value) {
+                            if ($value !== NULL) {
+                                $query->with('mail')
+                                    ->where(function ($q) use ($value) {
+                                        $q->where('status', $value);
+                                    });
                             }
                         });
                 }),
@@ -105,7 +125,10 @@ class MyTasksTable extends DataTableComponent
             Column::make("Attachment", "attachment")
                 ->isHidden(),
             Column::make("Action")
-            ->label(fn($row, Column $column) => view('livewire.team.column.team-tasks-table-action')->withRow($row)),
+                ->label(fn($row, Column $column) => view('livewire.team.column.team-tasks-table-action')->withRow($row)),
+            Column::make("Surat Tugas", "mail.status")
+                ->sortable()
+                ->view('livewire.team.column.team-tasks-mail'),
         ];
     }
 }

@@ -24,4 +24,8 @@ class Team extends Model
     public function tasks() {
         return $this->hasMany(Task::class);
     }
+
+    public function chief() {
+        return $this->hasMany(UserTeam::class)->where('position', 'Ketua')->first();
+    }
 }

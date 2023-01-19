@@ -37,17 +37,17 @@
             </div>
             @if ($tableCalendar)
                 @if ($myTasks)
-                    <livewire:task.my-tasks-calendar
+                    <livewire:team.team-tasks-calendar teamId="{{ $team->id }}" userId="{{ auth()->user()->id }}"
                         before-calendar-view="livewire/task/calendar-month-buttons" />
                 @else
-                    <livewire:team.team-tasks-calendar teamId="{{ $team->id }}"
+                    <livewire:team.team-tasks-calendar teamId="{{ $team->id }}" userId=""
                         before-calendar-view="livewire/task/calendar-month-buttons" />
                 @endif
             @else
                 @if ($myTasks)
-                    <livewire:task.my-tasks-table teamId="{{ $team->id }}" />
+                    <livewire:team.team-tasks-table teamId="{{ $team->id }}" userId="{{ auth()->user()->id }}" />
                 @else
-                    <livewire:team.team-tasks-table id="{{ $team->id }}" />
+                    <livewire:team.team-tasks-table teamId="{{ $team->id }}" />
                 @endif
             @endif
         </div>

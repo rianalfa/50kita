@@ -27,4 +27,8 @@ class Task extends Model
     public function team() {
         return $this->belongsTo(Team::class);
     }
+
+    public function mail() {
+        return $this->hasOne(TaskMail::class);
+    }
 }

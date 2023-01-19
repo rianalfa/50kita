@@ -33,6 +33,10 @@ class User extends Authenticatable
         'password',
         'phone_number',
         'address',
+        'function',
+        'nip',
+        'class',
+        'rank'
     ];
 
     /**

@@ -16,7 +16,7 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        $roles = ['user', 'admin', 'mitra', 'finance'];
+        $roles = ['user', 'admin', 'mitra', 'finance', 'ppk'];
 
         foreach ($roles as $role) {
             Role::create(['name' => $role]);
