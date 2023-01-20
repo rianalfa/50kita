@@ -4,8 +4,9 @@
         <X-input.wrapper>
             <x-input.select name="role" wire:model.defer="role">
                 <option value="admin">Admin</option>
-                <option value="user">Pegawai</option>
-                <option value="mitra">Mitra</option>
+                <option value="ppk">PPK</option>
+                <option value="finance">Bendahara</option>
+                <option value="user">Organik</option>
             </x-input.select>
         </X-input.wrapper>
     </x-modal.body>

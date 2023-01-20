@@ -24,8 +24,14 @@ class UserRoleModal extends ModalComponent
 
     public function saveRole() {
         try {
-            $role = $this->user->getRoleNames()[0];
-            $this->user->removeRole($role);
+            if ($this->role == 'user') {
+                foreach ($this->user->getRoleNames() as $role) {
+                    $this->user->removeRole($role);
+                }
+            } else {
+                $this->user->removeRole('user');
+            }
+
             $this->user->assignRole($this->role);
 
             $this->emit('success', 'Berhasil mengubah jabatan user');
