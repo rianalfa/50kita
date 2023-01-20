@@ -2,7 +2,7 @@
     <x-modal.header title="Tugas"></x-modal.header>
     <x-modal.body>
         <x-input.wrapper>
-            <x-input.label for="task.team_id" value="Pelaksana" />
+            <x-input.label for="task.team_id" value="Tim" />
             <x-input.select name="team_id" wire:model="task.team_id" wire:change="changeTeam">
                 @foreach (\App\Models\Team::get() as $team)
                     <option value="{{ $team->id }}">{{ $team->name }}</option>
@@ -23,7 +23,11 @@
 
         <x-input.wrapper>
             <x-input.label for="task.title" value="Judul" />
-            <x-input.text name="title" wire:model.defer="task.title" />
+            <x-input.select name="title" wire:model.defer="task.title">
+                @foreach (\App\Models\TaskType::get() ?? [] as $type)
+                    <option value="{{ $type->title }}">{{ $type->title }}</option>
+                @endforeach
+            </x-input.select>
             <x-input.error for="task.title" />
         </x-input.wrapper>
 

@@ -1,11 +1,27 @@
-<div class="flex flex-col space-y-4 md:space-y-8 relative">
+<div class="flex flex-col space-y-4 md:space-y-8 relative" x-data="{ openTaskType: false }">
     <div class="flex flex-col md:flex-row justify-between items-center">
         <x-input.toggle text="Tim Saya" wire:model="myTeams" />
         @role('admin')
-            <x-button.primary wire:click="$emit('openModal', 'team.team-modal')">
-                Buat Tim
-            </x-button.primary>
+            <div class="flex space-x-4">
+                <x-button.secondary @click="openTaskType = !openTaskType">
+                    Jenis Tugas
+                </x-button.secondary>
+
+                <x-button.primary wire:click="$emit('openModal', 'team.team-modal')">
+                    Buat Tim
+                </x-button.primary>
+            </div>
         @endrole
+    </div>
+
+    <div class="grid place-items-center" x-show="openTaskType"
+        x-transition:enter="transition ease-in-out duration-150"
+        x-transition:enter-start="opacity-0 -translate-y-28" x-transition:enter-end="opacity-100 translate-y-0"
+        x-transition:leave="transition ease-in-out duration-150"
+        x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-28"
+        @keydown.escape="openTaskType = false"
+    >
+        <livewire:task.task-type-show />
     </div>
 
     @if (sizeof($teams) != 0)
