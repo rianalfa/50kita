@@ -59,6 +59,7 @@ class TaskMailModal extends ModalComponent
 
             $this->emit('success', 'Berhasil membuat surat tugas');
             $this->emitTo('task.tasks-table', 'reloadTable');
+            $this->emitTo('task.tasks-calendar', 'reloadCalendar');
             $this->emitTo('task.tasks-calendar-event-modal', 'reloadModal');
             $this->emit('closeModal');
         } catch (Exception $e) {

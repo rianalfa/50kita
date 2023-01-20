@@ -3,7 +3,7 @@
     <x-modal.body>
         <x-input.wrapper>
             <x-input.label for="task.team_id" value="Pelaksana" />
-            <x-input.select name="team_id" wire:model="task.team_id">
+            <x-input.select name="team_id" wire:model="task.team_id" wire:change="changeTeam">
                 @foreach (\App\Models\Team::get() as $team)
                     <option value="{{ $team->id }}">{{ $team->name }}</option>
                 @endforeach

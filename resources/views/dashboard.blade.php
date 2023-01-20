@@ -15,7 +15,7 @@
         </div>
 
         <div class="mt-6">
-            <livewire:task.tasks-calendar teamId="" userId=""
+            <livewire:task.tasks-calendar teamId="" userId="{{ auth()->user()->hasRole('admin') ? '' : auth()->user()->id }}"
                 before-calendar-view="livewire/task/calendar-month-buttons" />
         </div>
     </x-card.base>

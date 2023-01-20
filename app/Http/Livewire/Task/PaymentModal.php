@@ -79,6 +79,7 @@ class PaymentModal extends ModalComponent
 
             $this->emit('success', 'Berhasil membuat pembayaran');
             $this->emitTo('task.tasks-table', 'reloadTable');
+            $this->emitTo('task.tasks-calendar', 'reloadCalendar');
             $this->emitTo('task.tasks-calendar-event-modal', 'reloadModal');
             $this->emit('closeModal');
         } catch (Exception $e) {

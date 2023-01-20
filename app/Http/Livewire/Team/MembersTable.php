@@ -77,6 +77,7 @@ class MembersTable extends DataTableComponent
                     $this->emit('success', 'Berhasil menghapus anggota');
                     $this->emit('reloadTable');
                     $this->emitTo('task.tasks-table', 'reloadTable');
+                    $this->emitTo('task.tasks-calendar', 'reloadCalendar');
                 } else {
                     $this->emit('error', 'Ketua tidak bisa dihapus');
                 }

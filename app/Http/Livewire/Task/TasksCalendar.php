@@ -13,6 +13,10 @@ class TasksCalendar extends LivewireCalendar
     public $teamId;
     public $userId;
 
+    protected $listeners = [
+        'reloadCalendar' => '$refresh',
+    ];
+
     public function events(): Collection
     {
         return Task::query()

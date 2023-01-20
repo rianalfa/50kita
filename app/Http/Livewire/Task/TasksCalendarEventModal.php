@@ -25,7 +25,7 @@ class TasksCalendarEventModal extends ModalComponent
 
     public function deleteTask() {
         try {
-            $chiefId = UserTeam::where('team_id', $this->teamId)
+            $chiefId = UserTeam::where('team_id', $this->task->team_id)
                         ->where('position', 'Ketua')
                         ->first()->user_id ?? 0;
 
@@ -35,6 +35,7 @@ class TasksCalendarEventModal extends ModalComponent
                 $this->emit('success', 'Berhasil menghapus tugas');
                 $this->emitTo('team.members-table', 'reloadTable');
                 $this->emitTo('task.tasks-table', 'reloadTable');
+                $this->emitTo('task.tasks-calendar', 'reloadCalendar');
                 $this->emit('closeModal');
             } else {
                 $this->emit('error', 'Tugas sudah dalam proses pengerjaan');

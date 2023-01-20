@@ -29,10 +29,14 @@ class TaskModal extends ModalComponent
         $this->task = Task::whereId($id)->first() ?? new Task();
 
         if (empty($this->task->id)) {
-            $this->task->team_id = $teamId ?? Team::first()->id;
-            $this->task->user_id = $userId ?? UserTeam::where('team_id', $this->task->team_id)->first()->user_id;
+            $this->task->team_id = !empty($teamId) ? $teamId : Team::first()->id;
+            $this->task->user_id = !empty($userId) ? $userId : UserTeam::where('team_id', $this->task->team_id)->first()->user_id;
             $this->task->start_from = Carbon::parse($startFrom)->format('Y-m-d') ?? date('Y-m-d');
         }
+    }
+
+    public function changeTeam() {
+        $this->task->user_id = UserTeam::where('team_id', $this->task->team_id)->first()->user_id;
     }
 
     public function saveTask() {
@@ -44,6 +48,7 @@ class TaskModal extends ModalComponent
             $this->emit('success', 'Berhasil menambah tugas');
             $this->emitTo('team.members-table', 'reloadTable');
             $this->emitTo('task.tasks-table', 'reloadTable');
+            $this->emitTo('task.tasks-calendar', 'reloadCalendar');
             $this->emit('closeModal');
         } catch (\Exception $e) {
             $this->emit('error', 'Gagal menambah tugas');

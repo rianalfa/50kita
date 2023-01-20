@@ -63,6 +63,7 @@ class TasksTable extends DataTableComponent
                 $this->emit('success', 'Berhasil menghapus tugas');
                 $this->emitTo('team.members-table', 'reloadTable');
                 $this->emitTo('task.tasks-table', 'reloadTable');
+                $this->emitTo('task.tasks-calendar', 'reloadCalendar');
                 $this->emit('closeModal');
             } else {
                 $this->emit('error', 'Tugas sudah dalam proses pengerjaan');

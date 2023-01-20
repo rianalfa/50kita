@@ -36,6 +36,7 @@ class ReportModal extends ModalComponent
 
                 $this->emit('success', 'Berhasil menambah progress');
                 $this->emitTo('task.tasks-table', 'reloadTable');
+                $this->emitTo('task.tasks-calendar', 'reloadCalendar');
                 $this->emitTo('task.tasks-calendar-event-modal', 'reloadModal');
                 $this->emit('closeModal');
             } else {
