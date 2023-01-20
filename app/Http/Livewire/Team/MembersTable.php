@@ -9,7 +9,7 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 use App\Models\UserTeam;
 use Illuminate\Database\Eloquent\Builder;
 
-class TeamMembersTable extends DataTableComponent
+class MembersTable extends DataTableComponent
 {
     protected $model = UserTeam::class;
     public $teamId;
@@ -76,7 +76,7 @@ class TeamMembersTable extends DataTableComponent
 
                     $this->emit('success', 'Berhasil menghapus anggota');
                     $this->emit('reloadTable');
-                    $this->emitTo('team.team-tasks-table', 'reloadTable');
+                    $this->emitTo('task.tasks-table', 'reloadTable');
                 } else {
                     $this->emit('error', 'Ketua tidak bisa dihapus');
                 }
@@ -102,9 +102,9 @@ class TeamMembersTable extends DataTableComponent
                     fn($value, $row, Column $column) => "<p class='text-center'>".$value."</p>"
                 )->html(),
             Column::make("Beban Kerja")
-                ->label(fn($row, Column $column) => view('livewire.team.column.team-members-table-tasks')->withRow($row)),
+                ->label(fn($row, Column $column) => view('livewire.team.column.members-table-tasks')->withRow($row)),
             Column::make("Actions")
-                ->label(fn($row, Column $column) => view('livewire.team.column.team-members-table-action')->withRow($row)),
+                ->label(fn($row, Column $column) => view('livewire.team.column.members-table-action')->withRow($row)),
         ];
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Team;
+namespace App\Http\Livewire\Task;
 
 use App\Http\Controllers\Mail;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
@@ -18,7 +18,7 @@ use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\TemplateProcessor;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 
-class TeamTasksTable extends DataTableComponent
+class TasksTable extends DataTableComponent
 {
     protected $model = Task::class;
     public $teamId;
@@ -61,8 +61,8 @@ class TeamTasksTable extends DataTableComponent
                 $task->delete();
 
                 $this->emit('success', 'Berhasil menghapus tugas');
-                $this->emitTo('team.team-members-table', 'reloadTable');
-                $this->emitTo('team.team-tasks-table', 'reloadTable');
+                $this->emitTo('team.members-table', 'reloadTable');
+                $this->emitTo('task.tasks-table', 'reloadTable');
                 $this->emit('closeModal');
             } else {
                 $this->emit('error', 'Tugas sudah dalam proses pengerjaan');
@@ -254,13 +254,13 @@ class TeamTasksTable extends DataTableComponent
                 )->html(),
             Column::make("Progress", "progress")
                 ->sortable()
-                ->view('livewire.team.column.team-tasks-table-progress'),
+                ->view('livewire.task.column.tasks-table-progress'),
             Column::make("Attachment", "attachment")
                 ->isHidden(),
             Column::make("Aksi")
-                ->label(fn($row, Column $column) => view('livewire.team.column.team-tasks-table-action')->withRow($row)),
+                ->label(fn($row, Column $column) => view('livewire.task.column.tasks-table-action')->withRow($row)),
             Column::make("Surat Tugas")
-                ->label(fn($row, Column $column) => view('livewire.team.column.team-tasks-mail')->withRow($row)),
+                ->label(fn($row, Column $column) => view('livewire.task.column.tasks-table-mail')->withRow($row)),
         ];
     }
 }

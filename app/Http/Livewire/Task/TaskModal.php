@@ -42,8 +42,8 @@ class TaskModal extends ModalComponent
             $this->task->save();
 
             $this->emit('success', 'Berhasil menambah tugas');
-            $this->emitTo('team.team-members-table', 'reloadTable');
-            $this->emitTo('team.team-tasks-table', 'reloadTable');
+            $this->emitTo('team.members-table', 'reloadTable');
+            $this->emitTo('task.tasks-table', 'reloadTable');
             $this->emit('closeModal');
         } catch (\Exception $e) {
             $this->emit('error', 'Gagal menambah tugas');

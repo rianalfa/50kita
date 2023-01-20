@@ -7,7 +7,7 @@ use App\Models\UserTeam;
 use Livewire\Component;
 use LivewireUI\Modal\ModalComponent;
 
-class TeamMemberModal extends ModalComponent
+class MemberModal extends ModalComponent
 {
     public $teamId;
     public $userTeam;
@@ -39,7 +39,7 @@ class TeamMemberModal extends ModalComponent
                 $this->userTeam->save();
 
                 $this->emit('success', 'Anggota berhasil ditambah');
-                $this->emitTo('team.team-members-table', 'reloadTable');
+                $this->emitTo('team.members-table', 'reloadTable');
                 $this->emit('closeModal');
             } else {
                 $this->emit('error', 'Anggota sudah ada dalam tim');

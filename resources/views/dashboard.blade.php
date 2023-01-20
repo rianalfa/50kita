@@ -15,7 +15,7 @@
         </div>
 
         <div class="mt-6">
-            <livewire:team.team-tasks-calendar teamId="" userId=""
+            <livewire:task.tasks-calendar teamId="" userId=""
                 before-calendar-view="livewire/task/calendar-month-buttons" />
         </div>
     </x-card.base>

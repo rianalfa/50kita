@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Team;
+namespace App\Http\Livewire\Task;
 
 use App\Models\Task;
 use App\Models\UserTeam;
@@ -8,7 +8,7 @@ use Asantibanez\LivewireCalendar\LivewireCalendar;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 
-class TeamTasksCalendar extends LivewireCalendar
+class TasksCalendar extends LivewireCalendar
 {
     public $teamId;
     public $userId;
@@ -36,7 +36,7 @@ class TeamTasksCalendar extends LivewireCalendar
     }
 
     public function onEventClick($taskId) {
-        $this->emit('openModal', 'team.team-tasks-calendar-event-modal', ['taskId' => $taskId]);
+        $this->emit('openModal', 'task.tasks-calendar-event-modal', ['taskId' => $taskId]);
     }
 
     public function onDayClick($year, $month, $day)

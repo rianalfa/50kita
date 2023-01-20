@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Team;
+namespace App\Http\Livewire\Task;
 
 use App\Http\Controllers\Mail;
 use App\Models\Task;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use LivewireUI\Modal\ModalComponent;
 
-class TeamTasksCalendarEventModal extends ModalComponent
+class TasksCalendarEventModal extends ModalComponent
 {
     public $task;
 
@@ -33,8 +33,8 @@ class TeamTasksCalendarEventModal extends ModalComponent
                 $this->task->delete();
 
                 $this->emit('success', 'Berhasil menghapus tugas');
-                $this->emitTo('team.team-members-table', 'reloadTable');
-                $this->emitTo('team.team-tasks-table', 'reloadTable');
+                $this->emitTo('team.members-table', 'reloadTable');
+                $this->emitTo('task.tasks-table', 'reloadTable');
                 $this->emit('closeModal');
             } else {
                 $this->emit('error', 'Tugas sudah dalam proses pengerjaan');
@@ -92,6 +92,6 @@ class TeamTasksCalendarEventModal extends ModalComponent
 
     public function render()
     {
-        return view('livewire.team.team-tasks-calendar-event-modal');
+        return view('livewire.task.tasks-calendar-event-modal');
     }
 }

@@ -20,12 +20,12 @@
         <div class="flex justify-between items-center">
             <p class="text-base md:text-lg font-semibold">Anggota</p>
             @if (auth()->user()->hasRole('admin') || $chief->id==auth()->user()->id)
-                <x-button.primary wire:click="$emit('openModal', 'team.team-member-modal', {{ json_encode(['teamId' => $team->id]) }})">
+                <x-button.primary wire:click="$emit('openModal', 'team.member-modal', {{ json_encode(['teamId' => $team->id]) }})">
                     + Anggota
                 </x-button.primary>
             @endif
         </div>
-        <livewire:team.team-members-table id="{{ $team->id }}" />
+        <livewire:team.members-table id="{{ $team->id }}" />
     </div>
 
     @if (!empty(\App\Models\UserTeam::where('user_id', auth()->user()->id)->where('team_id', $team->id)->first() ?? []))
@@ -37,17 +37,17 @@
             </div>
             @if ($tableCalendar)
                 @if ($myTasks)
-                    <livewire:team.team-tasks-calendar teamId="{{ $team->id }}" userId="{{ auth()->user()->id }}"
+                    <livewire:task.tasks-calendar teamId="{{ $team->id }}" userId="{{ auth()->user()->id }}"
                         before-calendar-view="livewire/task/calendar-month-buttons" />
                 @else
-                    <livewire:team.team-tasks-calendar teamId="{{ $team->id }}" userId=""
+                    <livewire:task.tasks-calendar teamId="{{ $team->id }}" userId=""
                         before-calendar-view="livewire/task/calendar-month-buttons" />
                 @endif
             @else
                 @if ($myTasks)
-                    <livewire:team.team-tasks-table teamId="{{ $team->id }}" userId="{{ auth()->user()->id }}" />
+                    <livewire:task.tasks-table teamId="{{ $team->id }}" userId="{{ auth()->user()->id }}" />
                 @else
-                    <livewire:team.team-tasks-table teamId="{{ $team->id }}" />
+                    <livewire:task.tasks-table teamId="{{ $team->id }}" />
                 @endif
             @endif
         </div>
