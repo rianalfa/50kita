@@ -53,7 +53,7 @@ class TaskMailModal extends ModalComponent
                 $this->taskMail->number = $lastTaskMailNumber;
             }
 
-            $this->taskMail->code = $this->task->team->ro.'/'.$this->taskMail->number.'/'.date('m').'/'.date('Y');
+            $this->taskMail->code = $this->taskMail->number.'/'.$this->task->team->ro.'/1308/'.date('m').'/'.date('Y');
 
             $this->taskMail->save();
 

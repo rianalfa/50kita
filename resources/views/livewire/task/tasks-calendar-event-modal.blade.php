@@ -51,48 +51,37 @@
             <p>Surat Tugas:</p>
             <div class="flex justify-end items-center col-span-1 lg:col-span-5">
                 <div class="flex flex-col space-y-2">
-                    @if (empty($task->mail))
-                        @if ($task->due_date >= date('Y-m-d') || $task->progress != 100)
-                            <x-badge.error text="belum selesai" />
-                        @elseif (auth()->user()->hasRole('admin') || auth()->user()->id == $chiefId)
-                            <x-badge.primary text="buat surat" class="cursor-pointer hover:scale-105 transition-transform duration-200 delay-75"
-                                wire:click="$emit('openModal', 'task.task-mail-modal', {{ json_encode(['taskId' => $task->id]) }})" />
+                    @if ($task->mail->status == 0)
+                        @if (auth()->user()->id == $task->user_id || auth()->user()->hasRole('admin') || auth()->user()->id == $chiefId)
+                            <x-badge.white text="unduh surat" class="cursor-pointer hover:scale-105 transition-transform duration-200 delay-75"
+                                wire:click="downloadMail({{ $task->id }})" />
+                            <x-badge.black text="unggah surat" class="cursor-pointer hover:scale-105 transition-transform duration-200 delay-75"
+                                wire:click="$emit('openModal', 'task.task-mail-upload-modal', {{ json_encode(['taskId' => $task->id]) }})" />
                         @else
-                            <x-badge.error text="belum ada surat tugas" />
+                            <x-badge.error text="surat belum diunggah" />
                         @endif
-                    @else
-                        @if ($task->mail->status == 0)
-                            @if (auth()->user()->id == $task->user_id)
-                                <x-badge.white text="unduh surat" class="cursor-pointer hover:scale-105 transition-transform duration-200 delay-75"
-                                    wire:click="downloadMail({{ $task->id }})" />
-                                <x-badge.black text="unggah surat" class="cursor-pointer hover:scale-105 transition-transform duration-200 delay-75"
-                                    wire:click="$emit('openModal', 'task.task-mail-upload-modal', {{ json_encode(['taskId' => $task->id]) }})" />
-                            @else
-                                <x-badge.error text="surat belum diunggah" />
-                            @endif
-                        @elseif ($task->mail->status == 1)
-                            @if (auth()->user()->hasRole('finance'))
-                                <x-badge.success text="terima surat" class="cursor-pointer hover:scale-105 transition-transform duration-200 delay-75"
-                                    wire:click="acceptMail({{ $task->id }})" />
-                                <a href="{{ asset('storage/mails/uploaded/'.$task->start_from.'_'.$task->mail->number.'.docx') }}">
-                                    <x-badge.white text="lihat surat" class="cursor-pointer hover:scale-105 transition-transform duration-200 delay-75"
-                                        />
-                                </a>
-                            @else
-                                <x-badge.error text="surat belum diterima" />
-                            @endif
-                        @elseif ($task->mail->status == 2)
-                            @if (auth()->user()->hasRole('finance'))
-                                <x-badge.success text="bayar" class="cursor-pointer hover:scale-105 transition-transform duration-200 delay-75"
-                                    wire:click="$emit('openModal', 'task.payment-modal', {{ json_encode(['taskId' => $task->id]) }})" />
-                            @else
-                                <x-badge.warning text="belum dibayar" />
-                            @endif
-                        @elseif ($task->mail->status == 3)
-                            <x-badge.success text="sudah dibayar" />
-                            <x-badge.white text="unduh kwitansi" class="cursor-pointer hover:scale-105 transition-transform duration-200 delay-75"
-                                wire:click="downloadReceipt({{ $task->id }})" />
+                    @elseif ($task->mail->status == 1)
+                        @if (auth()->user()->hasRole('finance'))
+                            <x-badge.success text="terima surat" class="cursor-pointer hover:scale-105 transition-transform duration-200 delay-75"
+                                wire:click="acceptMail({{ $task->id }})" />
+                            <a href="{{ asset('storage/mails/uploaded/'.$task->start_from.'_'.$task->mail->number.'.docx') }}">
+                                <x-badge.white text="lihat surat" class="cursor-pointer hover:scale-105 transition-transform duration-200 delay-75"
+                                    />
+                            </a>
+                        @else
+                            <x-badge.error text="surat belum diterima" />
                         @endif
+                    @elseif ($task->mail->status == 2)
+                        @if (auth()->user()->hasRole('finance'))
+                            <x-badge.success text="bayar" class="cursor-pointer hover:scale-105 transition-transform duration-200 delay-75"
+                                wire:click="$emit('openModal', 'task.payment-modal', {{ json_encode(['taskId' => $task->id]) }})" />
+                        @else
+                            <x-badge.warning text="belum dibayar" />
+                        @endif
+                    @elseif ($task->mail->status == 3)
+                        <x-badge.success text="sudah dibayar" />
+                        <x-badge.white text="unduh kwitansi" class="cursor-pointer hover:scale-105 transition-transform duration-200 delay-75"
+                            wire:click="downloadReceipt({{ $task->id }})" />
                     @endif
                 </div>
             </div>

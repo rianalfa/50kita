@@ -84,7 +84,11 @@ class TasksTable extends DataTableComponent
             }
 
             if (!Storage::exists('public/docs/'.$task->start_from.'_'.$taskMail->number.'.docx')) {
-                Mail::makeMail($taskId);
+                $msg = Mail::makeMail($taskId);
+
+                if ($msg !== true ) {
+                    $this->emit('error', (string)$msg);
+                }
             }
 
             return Storage::download('public/docs/'.$task->start_from.'_'.$taskMail->number.'.docx');

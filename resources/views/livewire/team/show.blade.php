@@ -14,15 +14,17 @@
         @endrole
     </div>
 
-    <div class="grid place-items-center" x-show="openTaskType"
-        x-transition:enter="transition ease-in-out duration-150"
-        x-transition:enter-start="opacity-0 -translate-y-28" x-transition:enter-end="opacity-100 translate-y-0"
-        x-transition:leave="transition ease-in-out duration-150"
-        x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-28"
-        @keydown.escape="openTaskType = false"
-    >
-        <livewire:task.task-type-show />
-    </div>
+    @role('admin')
+        <div class="grid place-items-center" x-show="openTaskType"
+            x-transition:enter="transition ease-in-out duration-150"
+            x-transition:enter-start="opacity-0 -translate-y-28" x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in-out duration-150"
+            x-transition:leave-start="opacity-100 translate-y-0" x-transition:leave-end="opacity-0 -translate-y-28"
+            @keydown.escape="openTaskType = false"
+        >
+            <livewire:task.task-type-show />
+        </div>
+    @endrole
 
     @if (sizeof($teams) != 0)
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-8">

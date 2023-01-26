@@ -28,7 +28,7 @@
         <livewire:team.members-table id="{{ $team->id }}" />
     </div>
 
-    @if (!empty(\App\Models\UserTeam::where('user_id', auth()->user()->id)->where('team_id', $team->id)->first() ?? []))
+    @if (!empty(\App\Models\UserTeam::where('user_id', auth()->user()->id)->where('team_id', $team->id)->first() ?? []) || auth()->user()->hasRole('admin'))
         <div class="flex flex-col justify-center space-y-4 bg-white rounded-xl p-4">
             <p class="text-base md:text-lg font-semibold">Tugas Tim</p>
             <div class="flex justify-between my-4">
