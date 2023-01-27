@@ -31,7 +31,7 @@ class Mail extends Controller
             ];
 
             if ($taskMail->spd) {
-                $templateProccessor = new TemplateProcessor('stspdTemplate.docx');
+                $templateProccessor = new TemplateProcessor('storage/docs/templates/stspdTemplate.docx');
 
                 $ppk = User::join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
                         ->where('model_has_roles.role_id', 5)
@@ -49,7 +49,7 @@ class Mail extends Controller
                 $data['taskDayDuration'] = (int)((strtotime($task->due_date) - strtotime($task->start_from))/60/60/24);
                 $data['userSignatureNIP'] = $taskMail->user->nip;
             } else {
-                $templateProccessor = new TemplateProcessor('stTemplate.docx');
+                $templateProccessor = new TemplateProcessor('storage/docs/templates/stTemplate.docx');
             }
 
             $templateProccessor->setValues($data);
@@ -106,7 +106,7 @@ class Mail extends Controller
             ]);
         }
 
-        $templateProccessor = new TemplateProcessor('kwitansiTemplate.docx');
+        $templateProccessor = new TemplateProcessor('storage/docs/templates/kwitansiTemplate.docx');
 
         $templateProccessor->setValues($data);
         $templateProccessor->cloneRowAndSetValues('descNum', $descriptions);

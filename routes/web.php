@@ -5,6 +5,7 @@ use App\Http\Livewire\Notifications\Show;
 use App\Http\Livewire\Task\MyTask;
 use App\Http\Livewire\Team\Detail as TeamDetail;
 use App\Http\Livewire\Team\Show as TeamShow;
+use App\Http\Livewire\Template\Show as TemplateShow;
 use App\Http\Livewire\User\UserList;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -48,4 +49,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     });
 
     Route::get('tasks', MyTask::class)->name('tasks');
+
+    //Routes for admin
+    Route::middleware(['admin'])->group(function() {
+        Route::get('/templates', TemplateShow::class)->name('templates');
+    });
 });

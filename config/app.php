@@ -216,6 +216,7 @@ return [
         'RequestConstant' => App\Constants\Request::class,
         'AddressConstant' => App\Constants\Address::class,
         'TeamIconColorConstant' => App\Constants\TeamIconColor::class,
+        'TemplatesConstant' => App\Constants\Templates::class,
     ])->toArray(),
 
 ];
